@@ -64,7 +64,8 @@ repetía en el parche de alfombra inferior derecho y producía la cuadrícula
 visual observada. La corrección se hizo en `office-tileset.svg` y en su
 fallback procedural, no ocultando la zona desde CSS.
 
-Las alfombras se usan como parches compactos para apoyar Projects y Contact;
+Las alfombras se usan como parches compactos para apoyar Projects (`8 x 3`
+tiles) y Contact;
 la zona Contact utiliza además un rug de `150 x 52 px` bajo el lounge. Las
 coordenadas de Furniture continúan en `officeLayoutData.ts`, con circulación
 abierta entre grupos y una sola habitación.

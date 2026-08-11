@@ -10,6 +10,26 @@ import { preloadOfficeAssets } from '../world/loadOfficeAssets'
 import { WORLD_BOUNDS } from '../world/worldConfig'
 
 // ============================================================================
+// BEGIN AddPortfolio-0009
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Centralizar la posición inicial limpia del Player dentro de la composición.
+//
+// Descripción:
+// El punto queda ligeramente debajo del centro funcional, separado de los
+// obstáculos y sin modificar la escala, el body ni el movimiento del Player.
+// ============================================================================
+const PLAYER_START_POSITION = {
+  x: 820,
+  y: 540,
+} as const
+// ============================================================================
+// END AddPortfolio-0009
+// ============================================================================
+
+// ============================================================================
 // BEGIN AddPortfolio-0001
 // Autor: Marco Antonio Cárdenas Sánchez
 // Fecha: 2026-08-11
@@ -105,9 +125,13 @@ export class OfficeScene extends Phaser.Scene {
     //
     // Descripción:
     // El Player conserva su escala y comportamiento; solo cambia su punto de
-    // aparición para mostrar About, Projects, Experience y Contact cercanos.
+    // aparición para mantener espacio visual alrededor del núcleo funcional.
     // ========================================================================
-    this.player = createPlayer(this, 820, 500)
+    this.player = createPlayer(
+      this,
+      PLAYER_START_POSITION.x,
+      PLAYER_START_POSITION.y,
+    )
     // ========================================================================
     // END AddPortfolio-0009
     // ========================================================================

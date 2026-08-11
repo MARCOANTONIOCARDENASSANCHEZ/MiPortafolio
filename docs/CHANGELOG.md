@@ -290,3 +290,20 @@ tenía regiones vacías y Furniture aislado. Sin crear un nuevo identificador,
 
 La aprobación visual final queda pendiente de una nueva revisión manual en
 navegador.
+
+### Pasada Final De Ajuste
+
+La siguiente revisión manual encontró una superposición del Player con el
+Furniture central y una relación débil entre projectTable, filingCabinet y la
+alfombra de Projects. Sin abrir un nuevo bloque, `AddPortfolio-0009` queda
+actualizado con estos ajustes finales:
+
+- `PLAYER_START_POSITION` centralizado en `(820, 540)`.
+- Alfombra de Projects reducida a `8 x 3` tiles y centrada bajo projectTable.
+- filingCabinet movido a `(320, 560)` para formar parte de Projects sin cerrar
+  la circulación.
+- Camera, Player scale, Player Movement, Input, Collision y Depth Sorting sin
+  cambios funcionales.
+
+La aprobación visual final continúa pendiente de la próxima validación manual
+de la oficina completa.

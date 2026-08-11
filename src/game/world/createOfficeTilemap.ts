@@ -192,7 +192,7 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
   // repetir el borde de cada tile ni crear una cuadrícula visual inferior.
   // ========================================================================
   ground.fill(OFFICE_TILE_INDEX.floorWood)
-  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 12, 11, 9, 4)
+  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 9, 11, 8, 3)
   ground.fill(OFFICE_TILE_INDEX.floorCarpet, 34, 19, 7, 3)
   // ========================================================================
   // END AddPortfolio-0009
