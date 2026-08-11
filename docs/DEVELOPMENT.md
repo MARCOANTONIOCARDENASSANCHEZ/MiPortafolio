@@ -118,6 +118,8 @@ src/
 │   ├── world/createOfficeWorld.ts
 │   └── world/officeLayout.ts
 ├── components/PortfolioPanel.tsx
+├── components/panels/PortfolioPanelContent.tsx
+├── data/portfolioData.ts
 └── main.tsx
 ```
 

@@ -45,7 +45,13 @@ createOfficeWorld    createPlayer       createKeyboardInput configureWorldBounds
 InteractionSystem
     |
     v
-InteractionBridge -> React / PortfolioPanel
+InteractionBridge -> React activePanel -> PortfolioPanel
+                                      |
+                                      v
+                                portfolioData
+                                      |
+                                      v
+                                Panel Content
 
 Depth
     |
@@ -186,6 +192,19 @@ Renderiza el panel provisional según `InteractionType`. React controla su
 estado, cierre por `X` y cierre por `Escape`; abrirlo o cerrarlo no desmonta
 `PhaserGame`.
 
+### `src/data/portfolioData.ts`
+
+Centraliza de forma tipada el perfil, VegaSystem, grupos de Skills, hechos de
+Experience, hitos de Achievements y canales opcionales de Contact. No contiene
+URLs ficticias ni datos laborales no confirmados.
+
+### `src/components/panels/PortfolioPanelContent.tsx`
+
+Contiene los renderers específicos `AboutPanelContent`, `ProjectsPanelContent`,
+`SkillsPanelContent`, `ExperiencePanelContent`, `AchievementsPanelContent` y
+`ContactPanelContent`. Consumen `portfolioData` y mantienen `PortfolioPanel`
+como shell común.
+
 ### `src/game/world/officeLayout.ts`
 
 Mantiene el punto de entrada histórico para los datos de oficina y reexporta
@@ -321,8 +340,8 @@ El catálogo distingue tiles (`floorWood`, `floorCarpet`, `wallBase`, `wallTop`,
 decisión artística definitiva.
 
 Las zonas semánticas actuales son `About`, `Projects`, `Skills`, `Experience`,
-`Achievements` y `Contact`. Solo organizan la composición; no tienen triggers
-ni `InteractionSystem`.
+`Achievements` y `Contact`. Cada una tiene contenido base en React y un target
+interactivo provisional; no tiene triggers de dominio adicionales.
 
 ## Tilemap Y Compatibilidad Con Tiled
 
@@ -382,6 +401,6 @@ puntual hacia React ocurre mediante `InteractionBridge` y `PortfolioPanel`.
 
 La estructura actual permite añadir sprites definitivos, cargar mapas JSON de
 Tiled, separar frentes y partes superiores de paredes, añadir animaciones del
-Player, sustituir el contenido provisional de `PortfolioPanel` y ampliar los
-targets interactivos. No existen todavía triggers de dominio, diálogos,
-inventario, NPCs ni conexión con contenido real.
+Player, ampliar el contenido de `portfolioData` y configurar canales públicos.
+No existen todavía triggers de dominio, diálogos, inventario, NPCs ni conexión
+con contenido externo.

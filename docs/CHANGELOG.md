@@ -349,3 +349,44 @@ Player
 - No se implementaron triggers de dominio, NPCs, diálogos, quests, inventario,
   contenido real de portfolio ni funcionalidades específicas de cada zona.
 - No se agregaron dependencias, assets, backend, APIs ni audio.
+
+## AddPortfolio-0011 — Contenido Base Del Portafolio
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Datos profesionales y contenido React data-driven
+
+Se incorpora contenido real base para los seis paneles existentes, conservando
+la detección de interacción en Phaser y el bridge de `AddPortfolio-0010`.
+
+### Implementación Registrada
+
+- `src/data/portfolioData.ts` con datos tipados de About, Projects, Skills,
+  Experience, Achievements y Contact.
+- About con nombre, título, resumen, experiencia, enfoque y tecnologías
+  confirmadas.
+- VegaSystem como único proyecto documentado, sin URLs inventadas.
+- Skills agrupadas por Frontend, Backend, Database, DevOps / Tools y
+  Architecture.
+- Experience con hechos confirmados y timeline preparado pero vacío.
+- Achievements limitado a hitos profesionales conocidos, sin premios ficticios.
+- Contact preparado para email, GitHub, LinkedIn y CV opcionales; actualmente
+  sin canales públicos configurados.
+- `PortfolioPanel` convertido en shell común con renderers específicos de cada
+  sección.
+- Contenido responsive, accesible mediante dialog, `aria-labelledby`, botón `X`
+  y Escape existente.
+
+### Flujo Conservado
+
+```text
+Player -> InteractionSystem -> InteractionBridge -> activePanel
+       -> PortfolioPanel -> portfolioData -> Panel Content
+```
+
+### Fuera Del Alcance
+
+- No se modificaron Office World, Player, Camera, Collision, Depth, Input ni
+  InteractionSystem.
+- No se agregaron CMS, backend, dependencias, URLs ficticias, CV ficticio ni
+  datos laborales no confirmados.

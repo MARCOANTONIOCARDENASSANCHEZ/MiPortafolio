@@ -80,7 +80,8 @@ Actualmente no existen:
 
 - Backend, API, base de datos o autenticación.
 - Persistencia de progreso o estado del jugador.
-- Contenido real de Projects, Skills, Experience, Achievements, About o Contact.
+- Contenido profesional completo y definitivo de Projects, Skills, Experience,
+  Achievements, About o Contact.
 - Sprites, tilesets o assets externos de terceros para el mundo.
 - Spritesheet definitivo y animaciones artísticas del Player.
 - Mapas JSON de Tiled cargados desde assets.
@@ -99,9 +100,9 @@ UI.
 Phaser es responsable principalmente del mundo RPG, escenas, `Player`,
 movimiento, cámara, colisiones, objetos interactivos y zonas de interacción.
 De esta lista, la implementación actual cubre la escena, `Player`, Direction,
-Animation placeholder, Movement, Camera, Collision y Shadow visual. Los
-objetos interactivos y las zonas de interacción están definidos como
-responsabilidades del dominio Phaser, pero aún no están implementados.
+Animation placeholder, Movement, Camera, Collision, Shadow visual e
+InteractionSystem. El contenido de los paneles es una primera base estática y
+no representa todavía la versión final del portafolio.
 
 ## Relación Con VegaSystem
 
@@ -113,11 +114,11 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0010`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0011`:
 
 - Sustituir los sprites provisionales por arte definitivo del mundo.
-- Reemplazar el contenido provisional de las zonas por datos reales.
-- Conectar cada zona con contenido final del portafolio.
+- Completar el contenido de las zonas con información profesional definitiva.
+- Configurar URLs públicas, CV y trayectoria laboral detallada cuando existan.
 - Añadir más escenas y navegación entre zonas.
 - Sustituir el Tilemap provisional por mapas y tilesets exportados desde Tiled.
 - Añadir sprites definitivos, spritesheets y animaciones del Player.

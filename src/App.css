@@ -300,3 +300,236 @@ reiniciar Phaser ni alterar el layout del mundo.
 /* ============================================================================
 END AddPortfolio-0010
 ============================================================================ */
+
+/* ============================================================================
+BEGIN AddPortfolio-0011
+Autor: Marco Antonio Cárdenas Sánchez
+Fecha: 2026-08-11
+
+Propósito:
+Dar estructura responsive al contenido real base de los paneles.
+
+Descripción:
+Los estilos mantienen una shell común, con grids y listas que pueden crecer sin
+crear overflow horizontal en pantallas pequeñas.
+============================================================================ */
+.portfolio-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding-right: 38px;
+}
+
+.portfolio-panel-header h2 {
+  margin-bottom: 0;
+}
+
+.portfolio-content-stack {
+  display: grid;
+  gap: 20px;
+}
+
+.portfolio-content-stack p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.portfolio-lead {
+  max-width: 640px;
+  font-size: 16px;
+}
+
+.portfolio-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.portfolio-profile-grid > div,
+.portfolio-skill-group,
+.portfolio-project-card,
+.portfolio-achievement-card,
+.portfolio-contact-list > div {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(16, 24, 39, 0.42);
+}
+
+.portfolio-profile-grid span,
+.portfolio-contact-list span,
+.portfolio-detail-label {
+  display: block;
+  margin: 0 0 7px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.portfolio-profile-grid strong,
+.portfolio-contact-list strong {
+  color: var(--text-h);
+  font-size: 14px;
+}
+
+.portfolio-panel-tags,
+.portfolio-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.portfolio-panel-tags span {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-h);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.portfolio-content-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.portfolio-content-row h3,
+.portfolio-skill-group h3,
+.portfolio-achievement-card h3 {
+  margin: 0;
+  color: var(--text-h);
+  font-size: 17px;
+}
+
+.portfolio-status {
+  color: var(--mint);
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.portfolio-project-card > p:not(.portfolio-detail-label),
+.portfolio-skill-group p,
+.portfolio-achievement-card p {
+  margin: 10px 0 0;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.portfolio-project-card .portfolio-detail-label {
+  margin-top: 18px;
+}
+
+.portfolio-project-card ul,
+.portfolio-panel .portfolio-fact-list {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 18px;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+.portfolio-project-card li,
+.portfolio-fact-list li {
+  padding: 0;
+  border: 0;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.portfolio-link-row {
+  margin-top: 16px;
+}
+
+.portfolio-link-row a,
+.portfolio-contact-list a {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.portfolio-link-row a:hover,
+.portfolio-link-row a:focus-visible,
+.portfolio-contact-list a:hover,
+.portfolio-contact-list a:focus-visible {
+  color: var(--text-h);
+  text-decoration: underline;
+}
+
+.portfolio-skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.portfolio-skill-group:last-child {
+  grid-column: 1 / -1;
+}
+
+.portfolio-skill-group .portfolio-panel-tags {
+  margin-top: 14px;
+}
+
+.portfolio-fact-list {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.portfolio-achievement-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.portfolio-achievement-mark {
+  display: grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  color: var(--accent);
+  font-family: var(--mono);
+}
+
+.portfolio-contact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.portfolio-empty-note {
+  color: var(--muted) !important;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  .portfolio-panel {
+    padding: 26px 20px;
+  }
+
+  .portfolio-profile-grid,
+  .portfolio-skill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-skill-group:last-child {
+    grid-column: auto;
+  }
+}
+/* ============================================================================
+END AddPortfolio-0011
+============================================================================ */
