@@ -3,6 +3,7 @@ import { configureCamera } from '../camera/configureCamera'
 import { configureWorldBounds, createWorldCollision } from '../collision/createWorldCollision'
 import { createPlayer } from '../entities/createPlayer'
 import { updatePlayerMovement } from '../entities/playerMovement'
+import type { Player } from '../entities/playerVisual'
 import { createKeyboardInput, readMovementDirection, type MovementInput } from '../input/createKeyboardInput'
 import { createOfficeWorld } from '../world/createOfficeWorld'
 import { WORLD_BOUNDS } from '../world/worldConfig'
@@ -33,7 +34,22 @@ import { WORLD_BOUNDS } from '../world/worldConfig'
 // Input, Collision y Camera mediante sus módulos especializados.
 // ============================================================================
 export class OfficeScene extends Phaser.Scene {
-  private player!: Phaser.Physics.Arcade.Sprite
+  // ========================================================================
+  // BEGIN AddPortfolio-0005
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Mantener en la escena el tipo visual enriquecido del Player.
+  //
+  // Descripción:
+  // La escena continúa orquestando el Player sin conocer la implementación de
+  // Direction, Animation o Shadow.
+  // ========================================================================
+  private player!: Player
+  // ========================================================================
+  // END AddPortfolio-0005
+  // ========================================================================
   private movementInput!: MovementInput
 
   constructor() {

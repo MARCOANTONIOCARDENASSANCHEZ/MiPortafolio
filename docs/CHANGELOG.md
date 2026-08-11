@@ -106,3 +106,31 @@ agregar arte definitivo, dependencias nuevas ni sistemas de interacción.
 - No se implementaron spritesheets, animaciones finales, NPCs, diálogos,
   quests, inventario ni `InteractionSystem`.
 - Collision continúa administrado por el sistema de `AddPortfolio-0002`.
+
+## AddPortfolio-0005 — Base Visual Del Player
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Fundación visual del Player RPG 2D
+
+Se reemplaza el gráfico único provisional por una estructura basada en
+`Phaser.Physics.Arcade.Sprite`, sin descargar assets ni agregar dependencias.
+
+### Implementación Registrada
+
+- `Player` visual separado de Physics, Movement, Camera, Collision y Depth.
+- Direcciones centralizadas `down`, `up`, `left` y `right`.
+- Estados `idle` y `walk` para cada dirección.
+- Placeholder local con diferencias visuales de frente, espalda, izquierda y
+  derecha.
+- Shadow visual sin Collision que acompaña al Player.
+- Physics body de `18 x 12 px` enfocado en la zona inferior del personaje.
+- Profundidad calculada desde `y + feetOffset` mediante `applyDepthSorting`.
+- Ruta futura preparada en `src/assets/sprites/player/` para el spritesheet
+  definitivo.
+
+### Fuera Del Alcance
+
+- No se agregó spritesheet artístico, audio ni asset externo.
+- No se implementaron animaciones finales ni controles mobile.
+- No se modificaron Camera, Collision, Tilemap ni React UI.

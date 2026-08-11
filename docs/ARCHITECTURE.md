@@ -151,15 +151,38 @@ cuerpo de Collision.
 
 ### `src/game/entities/createPlayer.ts`
 
-Genera la textura provisional en memoria y crea el
-`Phaser.Physics.Arcade.Sprite`. Configura su cuerpo, límites del World, arrastre
-y velocidad máxima. Su gráfico está encapsulado para que un `spritesheet` y
-animaciones futuras no obliguen a cambiar Input o Player Movement.
+Llama a `createPlayerVisual` y configura el Physics body del
+`Phaser.Physics.Arcade.Sprite`, sus límites del World, arrastre y velocidad
+máxima. El body mide `18 x 12 px` y comienza en el offset vertical `31`, por lo
+que representa principalmente los pies y no toda la silueta.
+
+### `src/game/entities/playerVisual.ts`
+
+Define `Player`, `PLAYER_DIRECTIONS`, `PlayerAnimationState` y el tamaño visual
+del personaje. Genera ocho texturas placeholder locales, crea los estados
+`idle-down`, `idle-up`, `idle-left`, `idle-right`, `walk-down`, `walk-up`,
+`walk-left` y `walk-right`, y mantiene la Shadow visual. El Player visible es
+siempre un `Arcade Sprite`; `Graphics` solo se utiliza para generar las
+texturas temporales.
+
+La composición actual del Player es:
+
+```text
+Player
+├── Sprite           Phaser.Physics.Arcade.Sprite
+├── Direction        PlayerDirection
+├── Animation        idle / walk por dirección
+├── Movement         playerMovement
+├── Physics Body     18 x 12 px en la zona inferior
+├── Shadow           Ellipse visual sin Collision
+└── Depth            applyDepthSorting con feetOffset
+```
 
 ### `src/game/entities/playerMovement.ts`
 
 Define `PLAYER_SPEED` y `updatePlayerMovement`. Aplica velocidad en píxeles por
-segundo y delega la profundidad en `applyDepthSorting`.
+segundo, conserva la última Direction cuando el Player se detiene y delega la
+actualización de Animation, Shadow y Depth en `playerVisual`.
 
 ### `src/game/input/createKeyboardInput.ts`
 
@@ -186,6 +209,10 @@ Expone `DEPTH_CONFIG` y `applyDepthSorting`. Los elementos dinámicos reciben
 Esto permite ordenar Player, NPCs futuros y Furniture sin dispersar llamadas a
 `setDepth`.
 
+Player utiliza como base vertical `player.y + 22`, que corresponde a la zona de
+los pies. Su Shadow utiliza esa misma base menos una unidad para permanecer
+debajo visualmente.
+
 ## Capas Visuales
 
 La composición real es:
@@ -197,6 +224,10 @@ Decoration   depth 30      TilemapLayer
 Furniture    1000 + baseY  Graphics dinámicos
 Player       1000 + y      Arcade Sprite
 ```
+
+En el Player, `y` se sustituye conceptualmente por `y + feetOffset` para que
+el orden corresponda a la parte inferior del personaje y no al centro de su
+Sprite.
 
 Furniture y Player comparten la misma escala de profundidad. Un objeto se
 considera apoyado en su `baseY`, que corresponde a su borde inferior. Por eso

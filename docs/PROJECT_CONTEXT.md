@@ -44,7 +44,11 @@ La implementación actual incluye:
 - Furniture provisional separado del Tilemap y ordenado mediante `Depth`.
 - Una única escena registrada: `OfficeScene`.
 - Una oficina provisional dibujada con `Phaser.GameObjects.Graphics`.
-- Un personaje provisional generado en memoria, sin imagen externa.
+- Un Player basado en `Phaser.Physics.Arcade.Sprite`, sin imagen externa.
+- Un placeholder direccional para `down`, `up`, `left` y `right`.
+- Estados de Animation `idle` y `walk` para las cuatro direcciones.
+- Una Shadow visual sin Collision bajo el Player.
+- Un Physics body reducido a la zona inferior del Player.
 - Movimiento mediante `WASD` y las flechas del teclado.
 - Input centralizado en `createKeyboardInput`.
 - Movimiento del Player separado en `playerMovement`.
@@ -65,6 +69,7 @@ Actualmente no existen:
 - Persistencia de progreso o estado del jugador.
 - Proyectos, ventanas, overlays u objetos interactivos conectados al mundo.
 - Sprites, tilesets o assets externos para el mundo.
+- Spritesheet definitivo y animaciones artísticas del Player.
 - Mapas JSON de Tiled cargados desde assets.
 - Escenas adicionales o transiciones entre escenas.
 - Objetos interactivos, zonas de interacción o `InteractionSystem`.
@@ -78,10 +83,10 @@ UI.
 
 Phaser es responsable principalmente del mundo RPG, escenas, `Player`,
 movimiento, cámara, colisiones, objetos interactivos y zonas de interacción.
-De esta lista, la implementación actual cubre la escena, `Player`,
-movimiento, Camera y Collision. Los objetos interactivos y las zonas de
-interacción están definidos como responsabilidades del dominio Phaser, pero
-aún no están implementados.
+De esta lista, la implementación actual cubre la escena, `Player`, Direction,
+Animation placeholder, Movement, Camera, Collision y Shadow visual. Los
+objetos interactivos y las zonas de interacción están definidos como
+responsabilidades del dominio Phaser, pero aún no están implementados.
 
 ## Relación Con VegaSystem
 
@@ -93,7 +98,7 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0004`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0005`:
 
 - Incorporar sprites y assets del mundo.
 - Añadir objetos interactivos y zonas de interacción.
@@ -103,6 +108,8 @@ pero no forman parte de la arquitectura implementada en `AddPortfolio-0004`:
 - Añadir sprites definitivos, spritesheets y animaciones del Player.
 - Completar el `Depth sorting` de paredes, muebles y objetos con partes
   superiores separadas.
+- Sustituir el placeholder del Player por un spritesheet en
+  `src/assets/sprites/player/`.
 
 Estas ideas no deben interpretarse como funcionalidades disponibles ni como
 decisiones arquitectónicas aprobadas para una implementación concreta.

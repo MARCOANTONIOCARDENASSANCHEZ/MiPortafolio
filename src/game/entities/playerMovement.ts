@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
-import { applyDepthSorting } from '../rendering/depthSorting'
+import { getPlayerDirection } from './playerVisual'
+import { updatePlayerVisual, type Player } from './playerVisual'
 
 // ============================================================================
 // BEGIN AddPortfolio-0002
@@ -17,7 +18,7 @@ import { applyDepthSorting } from '../rendering/depthSorting'
 export const PLAYER_SPEED = 150
 
 export function updatePlayerMovement(
-  player: Phaser.Physics.Arcade.Sprite,
+  player: Player,
   direction: Phaser.Math.Vector2,
 ) {
   player.setVelocity(direction.x * PLAYER_SPEED, direction.y * PLAYER_SPEED)
@@ -26,14 +27,33 @@ export function updatePlayerMovement(
   // Autor: Marco Antonio Cárdenas Sánchez
   // Fecha: 2026-08-11
   //
+  // Propósito histórico:
+  // Mantener el orden visual común durante el movimiento del Player.
+  //
+  // Descripción histórica:
+  // AddPortfolio-0004 centralizó el Depth sorting. AddPortfolio-0005 conserva
+  // esa integración dentro del nuevo flujo visual del Player.
+  // ========================================================================
+  // ========================================================================
+  // BEGIN AddPortfolio-0005
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
   // Propósito:
-  // Aplicar el orden visual común durante el movimiento del Player.
+  // Actualizar Direction, Animation y Shadow desde el movimiento real.
   //
   // Descripción:
-  // El Player comparte la misma regla de profundidad que los Furniture y
-  // futuros objetos dinámicos, sin duplicar cálculos en OfficeScene.
+  // El Player conserva la última dirección cuando direction está detenido y
+  // cambia entre idle y walk sin duplicar lógica en OfficeScene.
   // ========================================================================
-  applyDepthSorting(player)
+  updatePlayerVisual(
+    player,
+    getPlayerDirection(direction, player.direction),
+    direction.lengthSq() > 0,
+  )
+  // ========================================================================
+  // END AddPortfolio-0005
+  // ========================================================================
   // ========================================================================
   // END AddPortfolio-0004
   // ========================================================================

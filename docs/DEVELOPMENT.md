@@ -101,6 +101,7 @@ src/
 │   ├── collision/createWorldCollision.ts
 │   ├── entities/createPlayer.ts
 │   ├── entities/playerMovement.ts
+│   ├── entities/playerVisual.ts
 │   ├── input/createKeyboardInput.ts
 │   ├── rendering/depthSorting.ts
 │   ├── scenes/OfficeScene.ts
@@ -126,6 +127,11 @@ src/assets/
 
 Estas carpetas solo contienen `.gitkeep` por ahora; no hay assets externos ni
 archivos artísticos definitivos.
+
+El spritesheet definitivo del Player deberá reemplazar el placeholder desde
+`src/assets/sprites/player/`. La integración deberá conservar las direcciones
+`down`, `up`, `left` y `right`, con estados `idle` y `walk`, sin mover Input,
+Player Movement, Camera, Collision ni Depth sorting.
 
 Los cambios deben ser pequeños, respetar la separación React-Phaser y evitar
 modificar archivos que no estén relacionados con el objetivo del cambio.
