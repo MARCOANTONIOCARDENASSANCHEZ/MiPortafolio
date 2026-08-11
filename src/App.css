@@ -1,0 +1,202 @@
+/* ============================================================================
+BEGIN AddPortfolio-0001
+Autor: Marco Antonio Cárdenas Sánchez
+Fecha: 2026-08-11
+
+Propósito:
+Definir la presentación visual inicial de la interfaz React del portafolio.
+
+Descripción:
+Estos estilos construyen el marco responsive del mundo Phaser, la cabecera,
+los estados del jugador y los paneles informativos provisionales.
+============================================================================ */
+.portfolio-shell {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 52px 0 64px;
+}
+/* ============================================================================
+END AddPortfolio-0001
+============================================================================ */
+
+.portfolio-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: 28px;
+}
+
+.eyebrow,
+.panel-label,
+.game-card-header,
+.game-card-footer,
+.status-badge,
+kbd {
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.eyebrow,
+.panel-label {
+  margin: 0 0 12px;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.portfolio-header h1 {
+  max-width: 650px;
+  margin: 0;
+  color: var(--text-h);
+  font-size: clamp(38px, 6vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+
+.intro {
+  max-width: 540px;
+  margin-top: 18px;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 11px;
+}
+
+.status-badge strong {
+  padding-left: 10px;
+  border-left: 1px solid var(--border);
+  color: var(--text-h);
+  font-size: 11px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 12px var(--mint);
+}
+
+.game-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: 0 24px 70px rgba(8, 12, 25, 0.28);
+}
+
+.game-card-header,
+.game-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.game-card-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.coordinates,
+.footer-note {
+  color: var(--text);
+}
+
+.game-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #101827;
+}
+
+.phaser-container,
+.phaser-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.phaser-container canvas {
+  image-rendering: pixelated;
+}
+
+.game-card-footer {
+  border-top: 1px solid var(--border);
+}
+
+kbd {
+  display: inline-block;
+  padding: 4px 6px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-h);
+  font-size: 9px;
+}
+
+.portfolio-panels {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin-top: 28px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--border);
+}
+
+.portfolio-panels article {
+  padding: 24px;
+  background: var(--panel);
+}
+
+.portfolio-panels h2 {
+  margin: 0 0 8px;
+  color: var(--text-h);
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+
+.portfolio-panels article > p:last-child {
+  max-width: 440px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .portfolio-shell {
+    width: min(100% - 24px, 1120px);
+    padding: 28px 0 40px;
+  }
+
+  .portfolio-header {
+    display: block;
+  }
+
+  .status-badge {
+    width: max-content;
+    margin-top: 22px;
+  }
+
+  .game-card-footer,
+  .game-card-header {
+    flex-wrap: wrap;
+  }
+
+  .portfolio-panels {
+    grid-template-columns: 1fr;
+  }
+}
