@@ -102,10 +102,30 @@ src/
 │   ├── entities/createPlayer.ts
 │   ├── entities/playerMovement.ts
 │   ├── input/createKeyboardInput.ts
+│   ├── rendering/depthSorting.ts
 │   ├── scenes/OfficeScene.ts
+│   ├── world/worldConfig.ts
+│   ├── world/createOfficeTilemap.ts
+│   ├── world/createOfficeObjects.ts
+│   ├── world/createOfficeWorld.ts
 │   └── world/officeLayout.ts
 └── main.tsx
 ```
+
+La estructura de assets del mundo se conserva dentro de `src/assets/`:
+
+```text
+src/assets/
+├── maps/
+├── tilesets/
+├── sprites/player/
+├── sprites/objects/
+├── ui/
+└── placeholders/
+```
+
+Estas carpetas solo contienen `.gitkeep` por ahora; no hay assets externos ni
+archivos artísticos definitivos.
 
 Los cambios deben ser pequeños, respetar la separación React-Phaser y evitar
 modificar archivos que no estén relacionados con el objetivo del cambio.

@@ -18,6 +18,27 @@ export const GAME_SIZE = {
   height: 540,
 }
 
+// ==========================================================================
+// BEGIN AddPortfolio-0004
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Centralizar las opciones de renderizado pixel-art del juego.
+//
+// Descripción:
+// Phaser desactiva el filtrado y redondea la Camera para conservar la nitidez
+// de los tiles y sprites al escalar el Canvas dentro de React.
+// ==========================================================================
+export const RENDER_CONFIG = {
+  pixelArt: true,
+  antialias: false,
+  roundPixels: true,
+}
+// ==========================================================================
+// END AddPortfolio-0004
+// ==========================================================================
+
 export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameConfig {
   return {
     type: Phaser.AUTO,
@@ -25,7 +46,27 @@ export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameCon
     width: GAME_SIZE.width,
     height: GAME_SIZE.height,
     backgroundColor: '#101827',
-    pixelArt: true,
+    // ========================================================================
+    // BEGIN AddPortfolio-0004
+    // Autor: Marco Antonio Cárdenas Sánchez
+    // Fecha: 2026-08-11
+    //
+    // Propósito:
+    // Aplicar la configuración pixel-art al renderer y al Canvas.
+    //
+    // Descripción:
+    // Estos valores mantienen nítidos los tiles y sprites al adaptarse al
+    // contenedor responsive de React.
+    // ========================================================================
+    pixelArt: RENDER_CONFIG.pixelArt,
+    roundPixels: RENDER_CONFIG.roundPixels,
+    render: {
+      antialias: RENDER_CONFIG.antialias,
+      roundPixels: RENDER_CONFIG.roundPixels,
+    },
+    // ========================================================================
+    // END AddPortfolio-0004
+    // ========================================================================
     scale: {
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH,

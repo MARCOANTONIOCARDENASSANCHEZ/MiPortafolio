@@ -11,6 +11,8 @@ externos, un personaje provisional y una única escena llamada `OfficeScene`.
 El personaje se puede mover con `WASD` y las flechas del teclado, queda
 limitado por los bordes del World y colisiona con obstáculos provisionales.
 La Camera sigue al Player dentro de un World mayor que el viewport.
+El World incluye un Tilemap provisional con capas `Ground`, `Walls` y
+`Decoration`, además de Furniture con profundidad visual basada en su `baseY`.
 
 La interfaz React actual incluye la cabecera del portafolio, el contenedor del
 mundo interactivo y dos paneles informativos provisionales. Todavía no existen

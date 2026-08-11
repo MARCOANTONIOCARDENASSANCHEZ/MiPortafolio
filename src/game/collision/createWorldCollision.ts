@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import { OFFICE_OBSTACLES } from '../world/officeLayout'
-import type { WorldBounds } from '../world/officeLayout'
+import type { WorldBounds } from '../world/worldConfig'
 
 const COLLISION_TEXTURE_KEY = 'placeholder-collision'
 

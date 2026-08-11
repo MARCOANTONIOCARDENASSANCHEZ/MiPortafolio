@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { applyDepthSorting } from '../rendering/depthSorting'
 
 // ============================================================================
 // BEGIN AddPortfolio-0001
@@ -41,7 +42,22 @@ export function createPlayer(scene: Phaser.Scene, x: number, y: number) {
   createPlayerTexture(scene)
 
   const player = scene.physics.add.sprite(x, y, PLAYER_TEXTURE_KEY)
-  player.setDepth(10)
+  // ========================================================================
+  // BEGIN AddPortfolio-0004
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Aplicar al Player la estrategia común de profundidad dinámica.
+  //
+  // Descripción:
+  // La lógica visual deja de depender de un depth fijo y queda preparada para
+  // convivir con muebles y futuros objetos dinámicos del World.
+  // ========================================================================
+  applyDepthSorting(player)
+  // ========================================================================
+  // END AddPortfolio-0004
+  // ========================================================================
   player.setCollideWorldBounds(true)
   player.setDrag(900, 900)
   player.setMaxVelocity(150, 150)

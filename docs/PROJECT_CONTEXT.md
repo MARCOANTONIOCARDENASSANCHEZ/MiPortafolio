@@ -38,7 +38,10 @@ La implementación actual incluye:
 - Un componente `PhaserGame` que crea y destruye la instancia de `Phaser.Game`.
 - Una configuración de juego con viewport lógico de `960 x 540` y escala
   responsive mediante `Phaser.Scale.FIT`.
-- Un World provisional de `1824 x 984`, mayor que el viewport.
+- Un World provisional de `1792 x 960`, mayor que el viewport.
+- Un Tilemap provisional ortogonal de `56 x 30` tiles con `TILE_SIZE` de `32`.
+- Capas visuales `Ground`, `Walls` y `Decoration` generadas localmente.
+- Furniture provisional separado del Tilemap y ordenado mediante `Depth`.
 - Una única escena registrada: `OfficeScene`.
 - Una oficina provisional dibujada con `Phaser.GameObjects.Graphics`.
 - Un personaje provisional generado en memoria, sin imagen externa.
@@ -49,6 +52,8 @@ La implementación actual incluye:
 - Límites externos implementados con `Arcade Physics`.
 - Cinco obstáculos estáticos provisionales para demostrar Collision.
 - Debug de cuerpos de Physics habilitado únicamente durante desarrollo.
+- Renderizado pixel-art centralizado con `pixelArt`, `antialias` y
+  `roundPixels`.
 - Lógica de velocidad diagonal normalizada y profundidad visual basada en la
   coordenada `y` del personaje.
 
@@ -60,6 +65,7 @@ Actualmente no existen:
 - Persistencia de progreso o estado del jugador.
 - Proyectos, ventanas, overlays u objetos interactivos conectados al mundo.
 - Sprites, tilesets o assets externos para el mundo.
+- Mapas JSON de Tiled cargados desde assets.
 - Escenas adicionales o transiciones entre escenas.
 - Objetos interactivos, zonas de interacción o `InteractionSystem`.
 - Dependencia de runtime con `VegaSystem`.
@@ -87,12 +93,16 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0002`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0004`:
 
 - Incorporar sprites y assets del mundo.
 - Añadir objetos interactivos y zonas de interacción.
 - Conectar la exploración con paneles React del portafolio.
 - Añadir más escenas y navegación entre zonas.
+- Sustituir el Tilemap provisional por mapas y tilesets exportados desde Tiled.
+- Añadir sprites definitivos, spritesheets y animaciones del Player.
+- Completar el `Depth sorting` de paredes, muebles y objetos con partes
+  superiores separadas.
 
 Estas ideas no deben interpretarse como funcionalidades disponibles ni como
 decisiones arquitectónicas aprobadas para una implementación concreta.

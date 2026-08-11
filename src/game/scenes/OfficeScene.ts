@@ -4,7 +4,8 @@ import { configureWorldBounds, createWorldCollision } from '../collision/createW
 import { createPlayer } from '../entities/createPlayer'
 import { updatePlayerMovement } from '../entities/playerMovement'
 import { createKeyboardInput, readMovementDirection, type MovementInput } from '../input/createKeyboardInput'
-import { createOfficeLayout, WORLD_BOUNDS } from '../world/officeLayout'
+import { createOfficeWorld } from '../world/createOfficeWorld'
+import { WORLD_BOUNDS } from '../world/worldConfig'
 
 // ============================================================================
 // BEGIN AddPortfolio-0001
@@ -40,7 +41,22 @@ export class OfficeScene extends Phaser.Scene {
   }
 
   create() {
-    createOfficeLayout(this)
+    // ========================================================================
+    // BEGIN AddPortfolio-0004
+    // Autor: Marco Antonio Cárdenas Sánchez
+    // Fecha: 2026-08-11
+    //
+    // Propósito:
+    // Conectar el World visual basado en Tilemap con la escena existente.
+    //
+    // Descripción:
+    // OfficeScene delega la creación de capas y Furniture a createOfficeWorld,
+    // manteniendo su papel de orquestador y sin duplicar renderizado.
+    // ========================================================================
+    createOfficeWorld(this)
+    // ========================================================================
+    // END AddPortfolio-0004
+    // ========================================================================
     configureWorldBounds(this, WORLD_BOUNDS)
 
     this.player = createPlayer(this, 960, 540)

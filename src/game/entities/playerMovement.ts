@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import { applyDepthSorting } from '../rendering/depthSorting'
 
 // ============================================================================
 // BEGIN AddPortfolio-0002
@@ -20,7 +21,22 @@ export function updatePlayerMovement(
   direction: Phaser.Math.Vector2,
 ) {
   player.setVelocity(direction.x * PLAYER_SPEED, direction.y * PLAYER_SPEED)
-  player.setDepth(player.y)
+  // ========================================================================
+  // BEGIN AddPortfolio-0004
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Aplicar el orden visual común durante el movimiento del Player.
+  //
+  // Descripción:
+  // El Player comparte la misma regla de profundidad que los Furniture y
+  // futuros objetos dinámicos, sin duplicar cálculos en OfficeScene.
+  // ========================================================================
+  applyDepthSorting(player)
+  // ========================================================================
+  // END AddPortfolio-0004
+  // ========================================================================
 }
 // ============================================================================
 // END AddPortfolio-0002

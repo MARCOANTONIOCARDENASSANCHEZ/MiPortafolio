@@ -77,3 +77,32 @@ top-down 3/4 del proyecto. No se modifica código ni se agrega funcionalidad.
   Depth sorting, composición del mapa y Animations.
 - No se adoptará una perspectiva isométrica real ni una vista completamente
   cenital sin aprobación explícita.
+
+## AddPortfolio-0004 — Base De Assets Y Tilemap
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Fundación técnica de assets, Tilemap, capas y Depth sorting
+
+Se incorpora una base provisional para el mundo RPG 2D top-down 3/4 sin
+agregar arte definitivo, dependencias nuevas ni sistemas de interacción.
+
+### Implementación Registrada
+
+- Estructura de assets en `src/assets/` para mapas, tilesets, sprites, UI y
+  placeholders.
+- `TILE_SIZE` centralizado en `worldConfig.ts` con valor inicial `32 x 32`.
+- Tilemap ortogonal procedural de `56 x 30` tiles.
+- Capas reales `Ground`, `Walls` y `Decoration`.
+- Furniture provisional separado del Tilemap y de Collision.
+- `Depth sorting` centralizado mediante `applyDepthSorting`.
+- Prueba visual de Player delante y detrás de Furniture según `baseY`.
+- Configuración de pixel-art con `pixelArt`, `antialias` y `roundPixels`.
+- Compatibilidad futura documentada para mapas JSON exportados desde Tiled.
+
+### Fuera Del Alcance
+
+- No se agregaron assets externos ni archivos de arte definitivos.
+- No se implementaron spritesheets, animaciones finales, NPCs, diálogos,
+  quests, inventario ni `InteractionSystem`.
+- Collision continúa administrado por el sistema de `AddPortfolio-0002`.

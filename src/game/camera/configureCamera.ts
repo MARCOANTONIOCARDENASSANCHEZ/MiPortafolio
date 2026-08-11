@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import type { WorldBounds } from '../world/officeLayout'
+import type { WorldBounds } from '../world/worldConfig'
 
 // ============================================================================
 // BEGIN AddPortfolio-0002
