@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="32" viewBox="0 0 192 32" shape-rendering="crispEdges">
+  <rect width="192" height="32" fill="#2d2838"/>
+
+  <!-- floorWood: 0 -->
+  <rect x="0" y="0" width="32" height="32" fill="#8a6046"/>
+  <path d="M0 27h32" stroke="#a77857" stroke-width="2"/>
+
+  <!-- floorCarpet: 1 -->
+  <rect x="32" y="0" width="32" height="32" fill="#38556b"/>
+  <path d="M36 4h24v24H36z" fill="none" stroke="#70e1c1" stroke-width="1"/>
+
+  <!-- wallBase: 2 -->
+  <rect x="64" y="0" width="32" height="32" fill="#80533f"/>
+  <rect x="64" y="19" width="32" height="13" fill="#503548"/>
+
+  <!-- wallTop: 3 -->
+  <rect x="96" y="0" width="32" height="32" fill="#b97a59"/>
+  <rect x="96" y="0" width="32" height="7" fill="#d39b6e"/>
+  <rect x="96" y="25" width="32" height="7" fill="#503548"/>
+
+  <!-- wallCorner: 4 -->
+  <rect x="128" y="0" width="32" height="32" fill="#9b654e"/>
+  <rect x="128" y="0" width="32" height="7" fill="#d39b6e"/>
+  <rect x="148" y="7" width="12" height="25" fill="#503548"/>
+
+  <!-- doorway: 5 -->
+  <rect x="160" y="0" width="32" height="32" fill="#6f493c"/>
+  <rect x="164" y="4" width="24" height="28" fill="#503548"/>
+  <rect x="172" y="9" width="12" height="4" fill="#ffd166"/>
+</svg>

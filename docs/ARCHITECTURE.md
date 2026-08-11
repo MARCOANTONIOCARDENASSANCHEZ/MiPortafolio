@@ -56,8 +56,10 @@ main.tsx
       -> PhaserGame.tsx
           -> createGameConfig(parent)
               -> new Phaser.Game(...)
-                  -> OfficeScene.create()
-                      -> createOfficeWorld()
+                   -> OfficeScene.preload()
+                       -> preloadOfficeAssets()
+                   -> OfficeScene.create()
+                       -> createOfficeWorld()
                           -> Tilemap + Furniture
                       -> Player + Input + Collision + Camera
 ```
@@ -120,10 +122,10 @@ desactiva `antialias` y activa `roundPixels`.
 
 ### `src/game/scenes/OfficeScene.ts`
 
-Es la única escena actual y actúa como orquestador. Construye el World, crea
-el Player, conecta Input, Collision y Camera, y delega el movimiento. No carga
-assets, calcula depth directamente, administra Tilemap internamente ni
-implementa `InteractionSystem`.
+Es la única escena actual y actúa como orquestador. Carga el tileset local en
+`preload()`, construye el World, crea el Player, conecta Input, Collision y
+Camera, y delega el movimiento. No calcula depth directamente, administra
+Tilemap internamente ni implementa `InteractionSystem`.
 
 ### `src/game/world/worldConfig.ts`
 
@@ -133,8 +135,15 @@ las dimensiones lógicas que comparten Tilemap, Camera y Collision.
 ### `src/game/world/officeAssetCatalog.ts`
 
 Define `OFFICE_TILE_KEYS`, `OFFICE_OBJECT_KEYS`, `OFFICE_TILE_INDEX`,
-`OFFICE_PALETTE` y `OFFICE_ASSET_MANIFEST`. El manifest describe tipo, path
-futuro, frame, Collision y Depth. No carga paths inexistentes.
+`OFFICE_PALETTE`, las constantes del tileset y `OFFICE_ASSET_MANIFEST`. El
+manifest describe tipo, path actual o futuro, frame, Collision, Depth, origen y
+fallback.
+
+### `src/game/world/loadOfficeAssets.ts`
+
+Carga `office-tileset.svg` durante `OfficeScene.preload()`. El módulo solo
+registra el asset local del Tilemap; los muebles y el Player conservan sus
+placeholders actuales.
 
 ### `src/game/world/officeLayoutData.ts`
 
@@ -156,11 +165,13 @@ administra Input, Camera, Collision ni interacciones.
 
 ### `src/game/world/createOfficeTilemap.ts`
 
-Genera un tileset provisional local y un `Tilemap` ortogonal con las capas
-`Ground`, `Walls`, `WallUpper` y `Decoration`. `Ground` se rellena con madera
-y dos zonas de alfombra, `Walls` contiene la base visual del perímetro,
-`WallUpper` muestra la parte superior elevada y `Decoration` coloca elementos
-provisionales. Las capas son estáticas y no pasan por `Depth sorting` dinámico.
+Prefiere el tileset local cargado por `OfficeScene.preload()` y crea un
+`Tilemap` ortogonal con las capas `Ground`, `Walls`, `WallUpper` y
+`Decoration`. Si la textura no está disponible, genera un único tileset
+procedural de respaldo. `Ground` se rellena con madera y dos zonas de
+alfombra, `Walls` contiene la base visual del perímetro, `WallUpper` muestra
+la parte superior elevada y `Decoration` coloca la entrada. Las capas son
+estáticas y no pasan por `Depth sorting` dinámico.
 
 ### `src/game/world/createOfficeObjects.ts`
 
@@ -278,15 +289,17 @@ ni `InteractionSystem`.
 
 ## Tilemap Y Compatibilidad Con Tiled
 
-El Tilemap actual se genera desde una matriz vacía local y un tileset creado
-con `Graphics`. No existe todavía un archivo JSON ni una carga desde red.
+El Tilemap actual se genera desde una matriz vacía local y utiliza
+`office-tileset.svg`, cargado previamente por Phaser. Si el asset real falla,
+se usa el fallback procedural. No existe todavía un archivo JSON ni una carga
+desde red.
 
 La estructura preparada para assets es:
 
 ```text
 src/assets/
 ├── maps/.gitkeep
-├── tilesets/office/.gitkeep
+├── tilesets/office/office-tileset.svg
 ├── sprites/
 │   ├── player/.gitkeep
 │   └── objects/.gitkeep
@@ -297,8 +310,8 @@ src/assets/
 Los mapas JSON exportados desde Tiled deberán ir en `src/assets/maps/` y los
 tilesets en `src/assets/tilesets/`. En una futura escena de carga se podrá usar
 `this.load.tilemapTiledJSON` y después `scene.make.tilemap({ key })`, sin
-cambiar Input, Player Movement, Camera o Collision. Esa carga todavía no está
-implementada.
+cambiar Input, Player Movement, Camera o Collision. La carga de un tileset
+local ya está implementada; la carga del mapa JSON todavía no.
 
 ## Collision Y Visual Depth
 
@@ -315,11 +328,11 @@ implementación interna de las otras.
 
 ## Reemplazo De Placeholders
 
-Los paths del manifest apuntan a futuros archivos en
-`src/assets/tilesets/office/` y `src/assets/sprites/objects/`. Cuando exista
-pixel art definitivo, se reemplaza la generación procedural por carga de esos
-assets y se conserva el contrato de asset key, tamaño, baseY, Collision y
-Depth. Los mapas Tiled JSON seguirán el mismo contrato.
+El manifest apunta al tileset local actual en `src/assets/tilesets/office/` y a
+paths futuros en `src/assets/sprites/objects/`. Cuando exista pixel art
+definitivo, se reemplaza el SVG provisional y se conserva el contrato de asset
+key, tamaño, baseY, Collision y Depth. Los mapas Tiled JSON seguirán el mismo
+contrato.
 
 ## React Y Phaser
 

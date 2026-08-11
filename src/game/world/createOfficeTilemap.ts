@@ -1,12 +1,15 @@
 import Phaser from 'phaser'
 import { DEPTH_CONFIG } from '../rendering/depthSorting'
 import {
+  OFFICE_ASSET_MANIFEST,
   OFFICE_PALETTE,
+  OFFICE_TILE_KEYS,
+  OFFICE_TILESET_TEXTURE_KEY,
   OFFICE_TILE_INDEX,
 } from './officeAssetCatalog'
 import { TILE_SIZE, TILEMAP_SIZE, WORLD_BOUNDS } from './worldConfig'
 
-const TILESET_TEXTURE_KEY = 'placeholder-tileset'
+const PLACEHOLDER_TILESET_TEXTURE_KEY = 'placeholder-tileset'
 const TILESET_NAME = 'office-placeholder'
 const TILESET_TILE_COUNT = 6
 
@@ -28,7 +31,7 @@ export type OfficeTilemap = {
 //
 // Descripción histórica:
 // AddPortfolio-0004 generaba un tileset mínimo y las capas Ground, Walls y
-// Decoration. AddPortfolio-0006 conserva esa base y añade catálogo, alfombra,
+// Decoration. AddPortfolio-0006 conservó esa base y añadió catálogo, alfombra,
 // separación Wall Base / Wall Upper y una composición más reconocible.
 // ==========================================================================
 // ==========================================================================
@@ -45,7 +48,7 @@ export type OfficeTilemap = {
 // mapa JSON de Tiled sin cambiar Player, Camera, Collision o React.
 // ==========================================================================
 function createPlaceholderTileset(scene: Phaser.Scene) {
-  if (scene.textures.exists(TILESET_TEXTURE_KEY)) {
+  if (scene.textures.exists(PLACEHOLDER_TILESET_TEXTURE_KEY)) {
     return
   }
 
@@ -87,7 +90,11 @@ function createPlaceholderTileset(scene: Phaser.Scene) {
   graphics.fillStyle(OFFICE_PALETTE.accentGold, 1)
   graphics.fillRect(TILE_SIZE * 5 + 10, 9, 12, 4)
 
-  graphics.generateTexture(TILESET_TEXTURE_KEY, TILE_SIZE * TILESET_TILE_COUNT, TILE_SIZE)
+  graphics.generateTexture(
+    PLACEHOLDER_TILESET_TEXTURE_KEY,
+    TILE_SIZE * TILESET_TILE_COUNT,
+    TILE_SIZE,
+  )
   graphics.destroy()
 }
 
@@ -103,7 +110,37 @@ function requireLayer(
 }
 
 export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
-  createPlaceholderTileset(scene)
+  // ========================================================================
+  // BEGIN AddPortfolio-0007
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Preferir el tileset real local y conservar un fallback único.
+  //
+  // Descripción:
+  // El manifest declara si el asset tiene fallback procedural. La escena no
+  // carga paths inexistentes y el Tilemap mantiene su contrato de capas.
+  // ========================================================================
+  const floorAsset = OFFICE_ASSET_MANIFEST[OFFICE_TILE_KEYS.floorWood]
+  const hasRealTileset = scene.textures.exists(OFFICE_TILESET_TEXTURE_KEY)
+
+  if (!hasRealTileset && floorAsset.fallback !== 'procedural') {
+    throw new Error('El tileset del Office World no tiene fallback disponible.')
+  }
+
+  if (!hasRealTileset) {
+    console.warn('Office Tileset no disponible; se usa el fallback procedural.')
+    createPlaceholderTileset(scene)
+  }
+
+  const tilesetKey = hasRealTileset
+    ? OFFICE_TILESET_TEXTURE_KEY
+    : PLACEHOLDER_TILESET_TEXTURE_KEY
+  const tilesetName = hasRealTileset ? OFFICE_TILESET_TEXTURE_KEY : TILESET_NAME
+  // ========================================================================
+  // END AddPortfolio-0007
+  // ========================================================================
 
   const map = scene.make.tilemap({
     width: TILEMAP_SIZE.width,
@@ -112,8 +149,8 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
     tileHeight: TILE_SIZE,
   })
   const tileset = map.addTilesetImage(
-    TILESET_NAME,
-    TILESET_TEXTURE_KEY,
+    tilesetName,
+    tilesetKey,
     TILE_SIZE,
     TILE_SIZE,
   )

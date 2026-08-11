@@ -168,3 +168,31 @@ sin descargar assets, agregar dependencias ni implementar interacción.
   UI final.
 - No se modificó la arquitectura React + Phaser ni el Player de
   `AddPortfolio-0005`.
+
+## AddPortfolio-0007 — Primer Tileset Real Del Office World
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Integración de asset local y fallback visual
+
+Se incorpora el primer asset gráfico propio y local del Office World. El
+tileset es deliberadamente pequeño y provisional: valida el flujo real de
+preload, el contrato de `32 x 32 px`, la separación visual de piso, paredes,
+alfombra y entrada, y la compatibilidad con las capas existentes.
+
+### Implementación Registrada
+
+- Tileset local `src/assets/tilesets/office/office-tileset.svg` con seis frames.
+- Preload explícito desde `OfficeScene.preload()` antes de crear el World.
+- Catálogo actualizado con texture key, URL Vite, manifest y origen `real`.
+- Manifest con fallback `procedural` declarado para tiles y objetos futuros.
+- Tilemap capaz de preferir el tileset real y usar un único fallback si falta.
+- Capas existentes `Ground`, `Walls`, `WallUpper` y `Decoration` conservadas.
+- Documentación de paths, índices, carga y sustitución en `docs/ASSETS.md`.
+
+### Fuera Del Alcance
+
+- No se modificaron Player, Furniture, Collision, Camera, Input ni React.
+- No se agregaron assets externos, sprites de terceros ni dependencias nuevas.
+- No se agregaron interacción, triggers, NPCs, audio, mobile controls ni mapa
+  JSON de Tiled.

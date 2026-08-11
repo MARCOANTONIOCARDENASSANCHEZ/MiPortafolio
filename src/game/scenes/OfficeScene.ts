@@ -6,6 +6,7 @@ import { updatePlayerMovement } from '../entities/playerMovement'
 import type { Player } from '../entities/playerVisual'
 import { createKeyboardInput, readMovementDirection, type MovementInput } from '../input/createKeyboardInput'
 import { createOfficeWorld } from '../world/createOfficeWorld'
+import { preloadOfficeAssets } from '../world/loadOfficeAssets'
 import { WORLD_BOUNDS } from '../world/worldConfig'
 
 // ============================================================================
@@ -55,6 +56,25 @@ export class OfficeScene extends Phaser.Scene {
   constructor() {
     super('OfficeScene')
   }
+
+  // ========================================================================
+  // BEGIN AddPortfolio-0007
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Cargar el tileset real antes de construir el Office World.
+  //
+  // Descripción:
+  // La carga se mantiene mínima y específica de OfficeScene; el fallback se
+  // resuelve dentro de createOfficeTilemap cuando el archivo no está disponible.
+  // ========================================================================
+  preload() {
+    preloadOfficeAssets(this)
+  }
+  // ========================================================================
+  // END AddPortfolio-0007
+  // ========================================================================
 
   create() {
     // ========================================================================

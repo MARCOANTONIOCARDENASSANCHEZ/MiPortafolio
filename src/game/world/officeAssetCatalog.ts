@@ -1,5 +1,11 @@
 import { TILE_SIZE } from './worldConfig'
 
+export const OFFICE_TILESET_TEXTURE_KEY = 'office-tileset'
+export const OFFICE_TILESET_PATH = new URL(
+  '../../assets/tilesets/office/office-tileset.svg',
+  import.meta.url,
+).href
+
 // ============================================================================
 // BEGIN AddPortfolio-0006
 // Autor: Marco Antonio Cárdenas Sánchez
@@ -10,7 +16,7 @@ import { TILE_SIZE } from './worldConfig'
 //
 // Descripción:
 // Los módulos visuales consumen estas claves en lugar de repetir strings. Los
-// paths son contratos futuros y no se cargan mientras solo existan placeholders.
+// paths actuales y futuros permanecen centralizados para evitar acoplar escenas.
 // ============================================================================
 export const OFFICE_TILE_KEYS = {
   floorWood: 'floorWood',
@@ -84,69 +90,76 @@ export type OfficeAssetManifest = {
   tileIndex?: number
   collision: 'none' | 'data'
   depthMode: 'static' | 'dynamic' | 'upper'
-  source: 'placeholder' | 'future'
+  source: 'real' | 'placeholder' | 'future'
+  fallback: 'procedural' | null
 }
 
 export const OFFICE_ASSET_MANIFEST: Record<OfficeAssetKey, OfficeAssetManifest> = {
   floorWood: {
     key: OFFICE_TILE_KEYS.floorWood,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.floorWood,
     collision: 'none',
     depthMode: 'static',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   floorCarpet: {
     key: OFFICE_TILE_KEYS.floorCarpet,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.floorCarpet,
     collision: 'none',
     depthMode: 'static',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   wallBase: {
     key: OFFICE_TILE_KEYS.wallBase,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.wallBase,
     collision: 'data',
     depthMode: 'static',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   wallTop: {
     key: OFFICE_TILE_KEYS.wallTop,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.wallTop,
     collision: 'none',
     depthMode: 'upper',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   wallCorner: {
     key: OFFICE_TILE_KEYS.wallCorner,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.wallCorner,
     collision: 'none',
     depthMode: 'upper',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   doorway: {
     key: OFFICE_TILE_KEYS.doorway,
     type: 'tile',
-    path: 'src/assets/tilesets/office/office-tileset.png',
+    path: 'src/assets/tilesets/office/office-tileset.svg',
     frame: { width: TILE_SIZE, height: TILE_SIZE },
     tileIndex: OFFICE_TILE_INDEX.doorway,
     collision: 'none',
     depthMode: 'static',
-    source: 'placeholder',
+    source: 'real',
+    fallback: 'procedural',
   },
   ...Object.fromEntries(
     Object.values(OFFICE_OBJECT_KEYS).map((key) => [key, {
@@ -156,6 +169,7 @@ export const OFFICE_ASSET_MANIFEST: Record<OfficeAssetKey, OfficeAssetManifest> 
       collision: 'data',
       depthMode: 'dynamic',
       source: 'future',
+      fallback: 'procedural',
     }]),
   ) as Record<OfficeObjectKey, OfficeAssetManifest>,
 }

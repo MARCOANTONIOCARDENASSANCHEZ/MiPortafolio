@@ -45,6 +45,7 @@ La documentación autoritativa se encuentra en [`docs/`](./docs/):
 
 - [`PROJECT_CONTEXT.md`](./docs/PROJECT_CONTEXT.md): contexto y alcance real.
 - [`ARCHITECTURE.md`](./docs/ARCHITECTURE.md): arquitectura implementada.
+- [`ASSETS.md`](./docs/ASSETS.md): catálogo, paths y convención de assets.
 - [`DEVELOPMENT.md`](./docs/DEVELOPMENT.md): reglas y flujo de desarrollo.
 - [`DECISIONS.md`](./docs/DECISIONS.md): decisiones aceptadas.
 - [`CHANGELOG.md`](./docs/CHANGELOG.md): trazabilidad `AddPortfolio-NNNN`.

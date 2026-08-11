@@ -11,6 +11,7 @@ debe leer, en conjunto, los siguientes archivos:
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT.md`
 - `docs/CHANGELOG.md`
+- `docs/ASSETS.md`
 
 La documentación de `docs/` es el contexto autoritativo del proyecto.
 
@@ -105,6 +106,7 @@ src/
 │   ├── input/createKeyboardInput.ts
 │   ├── rendering/depthSorting.ts
 │   ├── scenes/OfficeScene.ts
+│   ├── world/loadOfficeAssets.ts
 │   ├── world/worldConfig.ts
 │   ├── world/officeAssetCatalog.ts
 │   ├── world/officeLayoutData.ts
@@ -127,8 +129,9 @@ src/assets/
 └── placeholders/
 ```
 
-Estas carpetas solo contienen `.gitkeep` por ahora; no hay assets externos ni
-archivos artísticos definitivos.
+Las carpetas de mapas, sprites, UI y placeholders conservan `.gitkeep`; el
+primer tileset propio está en `src/assets/tilesets/office/office-tileset.svg`.
+No hay assets externos ni arte definitivo.
 
 Los assets definitivos del Office World deberán reemplazar los placeholders
 desde `src/assets/tilesets/office/` y `src/assets/sprites/objects/`. El
