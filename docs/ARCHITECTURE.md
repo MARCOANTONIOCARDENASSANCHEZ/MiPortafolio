@@ -36,11 +36,11 @@ createOfficeWorld    createPlayer       createKeyboardInput configureWorldBounds
     |                playerMovement     WASD + Arrow Keys  OFFICE_OBJECTS       follow + bounds
     |--------------------------|
     v                          v
-Tilemap                    OfficeObjects
-Ground                     officeLayoutData
-Walls                      Graphics + Depth
-WallUpper                  Collision metadata
-Decoration
+    Tilemap                    OfficeObjects
+    Ground                     officeLayoutData
+    Walls                      Sprites + Containers + Depth
+    WallUpper                  Collision metadata
+    Decoration
 
 Depth
     |
@@ -93,11 +93,11 @@ flowchart TD
 ## Viewport, World Y Tile Size
 
 El viewport lógico de Phaser es `960 x 540`, definido por `GAME_SIZE`. El
-World provisional ocupa `1792 x 960`, comienza en `(48, 48)` y está definido
+World provisional ocupa `1536 x 800`, comienza en `(48, 48)` y está definido
 por `WORLD_BOUNDS` en `worldConfig.ts`.
 
 `TILE_SIZE` está centralizado en `worldConfig.ts` con un valor inicial de
-`32 x 32 px`. El mapa provisional utiliza `56 x 30` tiles, por lo que sus
+`32 x 32 px`. El mapa provisional utiliza `48 x 25` tiles, por lo que sus
 dimensiones coinciden con el World. El tamaño puede revisarse cuando exista el
 pixel art definitivo.
 
@@ -115,7 +115,7 @@ destruye la instancia al desmontarlo.
 
 ### `src/game/config.ts`
 
-Define `GAME_SIZE`, `RENDER_CONFIG` y `createGameConfig`. Configura
+Define `GAME_SIZE`, `RENDER_CONFIG`, `DEBUG_CONFIG` y `createGameConfig`. Configura
 `Phaser.AUTO`, `Phaser.Scale.FIT`, centrado automático, `Arcade Physics` sin
 gravedad y el registro de `OfficeScene`. `RENDER_CONFIG` activa `pixelArt`,
 desactiva `antialias` y activa `roundPixels`.
@@ -141,15 +141,18 @@ fallback.
 
 ### `src/game/world/loadOfficeAssets.ts`
 
-Carga `office-tileset.svg` durante `OfficeScene.preload()`. El módulo solo
-registra el asset local del Tilemap; los muebles y el Player conservan sus
-placeholders actuales.
+Carga `office-tileset.svg` y `office-furniture.svg` durante
+`OfficeScene.preload()`. El módulo registra los assets locales del World; el
+Player conserva su placeholder actual.
 
 ### `src/game/world/officeLayoutData.ts`
 
 Define `OFFICE_OBJECTS`, `OFFICE_ZONES` y los tipos de composición. Cada
 objeto declara `id`, asset, categoría, zona, posición de apoyo, tamaño visual,
-Collision y `depthMode`. `OfficeScene` no contiene coordenadas de Furniture.
+Collision y `depthMode`. `AddPortfolio-0009` mantiene una segunda pasada de
+composición sobre estas coordenadas: acerca Projects, Skills, Experience y
+Contact, reduce el lounge y conserva una sola oficina con circulación. `OfficeScene`
+no contiene coordenadas de Furniture.
 
 ### `src/game/world/officeLayout.ts`
 
@@ -168,18 +171,20 @@ administra Input, Camera, Collision ni interacciones.
 Prefiere el tileset local cargado por `OfficeScene.preload()` y crea un
 `Tilemap` ortogonal con las capas `Ground`, `Walls`, `WallUpper` y
 `Decoration`. Si la textura no está disponible, genera un único tileset
-procedural de respaldo. `Ground` se rellena con madera y dos zonas de
-alfombra, `Walls` contiene la base visual del perímetro, `WallUpper` muestra
-la parte superior elevada y `Decoration` coloca la entrada. Las capas son
-estáticas y no pasan por `Depth sorting` dinámico.
+procedural de respaldo. `Ground` se rellena con madera y dos zonas compactas de
+alfombra, `Walls` contiene la base visual del perímetro, `WallUpper` muestra la
+parte superior elevada y `Decoration` coloca la entrada. Las capas son
+estáticas y no pasan por `Depth sorting` dinámico. El tile de alfombra no
+repite bordes por celda, evitando una cuadrícula visual en el parche inferior.
 
 ### `src/game/world/createOfficeObjects.ts`
 
-Genera Furniture provisional con `Graphics` a partir de `OFFICE_OBJECTS` y
-`OFFICE_ASSET_MANIFEST`. Incluye escritorios, PC, silla, librero, mesa de
-proyectos, sofá, pizarrón, plantas, archivador y estante de logros. Cada objeto
-conserva volumen visible y utiliza la base vertical como referencia para su
-profundidad. La representación visual no contiene el cuerpo de Collision.
+Genera Furniture desde `OFFICE_OBJECTS` y `OFFICE_ASSET_MANIFEST` usando un
+spritesheet local propio. Cada objeto vive en un `Container` con sombra y
+sprite, conserva volumen visible y utiliza la base vertical como referencia
+para su profundidad. Si el spritesheet no está disponible, reutiliza un único
+fallback procedural. La representación visual no contiene el cuerpo de
+Collision.
 
 ### `src/game/entities/createPlayer.ts`
 
@@ -257,7 +262,7 @@ Ground       depth 0       TilemapLayer
 Walls        depth 20      TilemapLayer
 Decoration   depth 30      TilemapLayer
 WallUpper    depth 1900    TilemapLayer
-Furniture    1000 + baseY  Graphics dinámicos
+Furniture    1000 + baseY  Containers dinámicos
 Player       1000 + y + feetOffset  Arcade Sprite
 ```
 
@@ -302,7 +307,7 @@ src/assets/
 ├── tilesets/office/office-tileset.svg
 ├── sprites/
 │   ├── player/.gitkeep
-│   └── objects/.gitkeep
+│   └── objects/office/office-furniture.svg
 ├── ui/.gitkeep
 └── placeholders/.gitkeep
 ```

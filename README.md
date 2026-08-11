@@ -6,18 +6,21 @@ construida con React y el mundo explorable está construido con Phaser.
 
 ## Estado actual
 
-La implementación actual contiene una oficina provisional dibujada sin assets
-externos, un Player provisional basado en `Arcade Sprite` y una única escena
-llamada `OfficeScene`. El Player se puede mover con `WASD` y las flechas del
+La implementación actual contiene una oficina provisional compacta con un
+tileset y Furniture locales propios, un Player provisional basado en `Arcade
+Sprite` y una única escena llamada `OfficeScene`. El Player se puede mover con
+`WASD` y las flechas del
 teclado, queda limitado por los bordes del World y colisiona con obstáculos
 provisionales. La Camera sigue al Player dentro de un World mayor que el
 viewport.
 El Player distingue las cuatro direcciones, estados `idle` y `walk`, y utiliza
 una sombra visual sin Collision.
-El World incluye un Tilemap provisional con capas `Ground`, `Walls` y
-`WallUpper` y `Decoration`, además de Furniture con profundidad visual basada
-en su `baseY`. La oficina utiliza un catálogo de assets y una distribución
-data-driven con zonas semánticas sin interacción activa.
+El World incluye un Tilemap provisional con capas `Ground`, `Walls`,
+`WallUpper` y `Decoration`, además de Furniture local con profundidad visual
+basada en su `baseY`. La oficina utiliza un catálogo de assets y una
+distribución data-driven con zonas semánticas sin interacción activa. La
+composición actual agrupa las zonas dentro de una sola oficina y mantiene el
+debug de Collision desactivado para la ejecución normal.
 
 La interfaz React actual incluye la cabecera del portafolio, el contenedor del
 mundo interactivo y dos paneles informativos provisionales. Todavía no existen

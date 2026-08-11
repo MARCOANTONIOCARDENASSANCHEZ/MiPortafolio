@@ -196,3 +196,97 @@ alfombra y entrada, y la compatibilidad con las capas existentes.
 - No se agregaron assets externos, sprites de terceros ni dependencias nuevas.
 - No se agregaron interacción, triggers, NPCs, audio, mobile controls ni mapa
   JSON de Tiled.
+
+## AddPortfolio-0008 — Office Furniture Pixel Art
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Integración de Furniture local y composición visual
+
+Se reemplazan los placeholders geométricos de Furniture por un spritesheet SVG
+propio, manteniendo la perspectiva RPG 2D top-down 3/4 de `DEC-007`. La
+implementación se limita a la representación visual de la oficina y no agrega
+`InteractionSystem`.
+
+### Implementación Registrada
+
+- Spritesheet local `src/assets/sprites/objects/office/office-furniture.svg`.
+- 17 frames propios de `64 x 64 px` para los objetos del Office World.
+- Desk, PC, chair, bookshelf, projectTable y experienceDesk.
+- Sofa, coffeeTable, whiteboard, plants, lamp y trophyShelf.
+- Phone, filingCabinet, door y rug.
+- Preload específico de Furniture integrado en `preloadOfficeAssets`.
+- `OFFICE_ASSET_MANIFEST` actualizado con paths, frames, Collision, Depth,
+  `source: 'real'` y fallback procedural.
+- Furniture representado mediante `Container` con sombra y sprite con origen
+  inferior para conservar `baseY`.
+- `applyDepthSorting` conservado para Player, muebles altos y objetos dinámicos.
+- Rug agregado como decoración sin Collision en la zona `Contact`.
+- Fallback procedural único conservado si no carga el spritesheet.
+
+### Fuera Del Alcance
+
+- No se implementaron `InteractionSystem`, triggers, eventos de cercanía ni
+  paneles React.
+- No se modificaron funcionalmente Player, Input, Movement, Camera, Collision,
+  Tilemap ni la arquitectura React + Phaser.
+- No se agregaron dependencias, assets externos, logos, NPCs, diálogos, audio ni
+  backend.
+
+## AddPortfolio-0009 — Office World Composition Pass
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Pulido visual y compactación de composición
+
+Se realiza una pasada de composición del Office World antes de implementar
+`InteractionSystem`. El cambio conserva la arquitectura React + Phaser, la
+perspectiva `DEC-007`, el Player, Collision, Camera, Tilemap y Depth sorting.
+
+### Implementación Registrada
+
+- World reducido de `1792 x 960` a `1536 x 800` mediante `TILEMAP_SIZE`.
+- Tilemap reducido de `56 x 30` a `48 x 25` tiles sin migrar a Tiled JSON.
+- Furniture reagrupado en una única oficina con rutas de circulación más cortas.
+- About centrado alrededor de desk, PC, chair y bookshelf.
+- Projects agrupado con projectTable y filingCabinet.
+- Skills agrupado con bookshelf y whiteboard.
+- Experience agrupado con experienceDesk, lamp y plantLarge.
+- Achievements integrado con trophyShelf en la zona inferior central.
+- Contact convertido en lounge con sofa, coffeeTable, rug, phone y plantSmall.
+- `DEBUG_CONFIG.physics` centralizado y desactivado por defecto.
+- Piso de madera con menor contraste y alfombras compactas sin bordes repetidos.
+- Causa de la cuadrícula inferior localizada en el borde repetido del tile
+  `floorCarpet`; corregida en el SVG y en el fallback procedural.
+- Player scale, Camera zoom, Physics body, Input y Movement conservados.
+
+### Fuera Del Alcance
+
+- No se implementaron `InteractionSystem`, triggers, proximity detection ni
+  contenido real de las zonas.
+- No se modificó `DEC-007`, React, Phaser, Player, Collision central, Camera
+  follow, Tiled JSON ni la arquitectura de preload.
+- No se agregaron dependencias, assets externos, audio, backend ni UI final.
+
+### Segunda Pasada Visual
+
+La validación manual de navegador detectó que la primera composición todavía
+tenía regiones vacías y Furniture aislado. Sin crear un nuevo identificador,
+`AddPortfolio-0009` se continúa con estos ajustes:
+
+- Alfombra superior izquierda reducida y asociada a la estación de Projects.
+- Rug de Contact reducido a `150 x 52 px` y lounge agrupado con sofa,
+  coffeeTable, phone y plantSmall.
+- Sofa reducido de `210 x 94` a `184 x 82` únicamente en su visual.
+- Bookshelf acercado a Skills y whiteboard para evitar un objeto aislado.
+- Projects acercado mediante filingCabinet junto a projectTable.
+- Experience compactado con experienceDesk, lamp y plantLarge.
+- TrophyShelf acercado al núcleo inferior de la oficina.
+- Door reubicada a la fila interior del borde, con doorway y umbral visibles.
+- Primera posición del Player ajustada a `(820, 500)` sin cambiar escala ni
+  comportamiento.
+- WallUpper extendido una celda en los laterales superiores para reforzar
+  corners sin cambiar Collision ni convertir paredes en bandas gruesas.
+
+La aprobación visual final queda pendiente de una nueva revisión manual en
+navegador.

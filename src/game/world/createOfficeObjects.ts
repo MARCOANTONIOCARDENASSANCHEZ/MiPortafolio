@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import { DEPTH_CONFIG, applyDepthSorting } from '../rendering/depthSorting'
 import {
   OFFICE_ASSET_MANIFEST,
+  OFFICE_FURNITURE_TEXTURE_KEY,
   OFFICE_OBJECT_KEYS,
   OFFICE_PALETTE,
 } from './officeAssetCatalog'
@@ -9,8 +10,8 @@ import type { OfficeObjectDefinition } from './officeLayoutData'
 import { OFFICE_OBJECTS } from './officeLayoutData'
 
 export type OfficeObjectVisuals = {
-  dynamic: Phaser.GameObjects.Graphics[]
-  upper: Phaser.GameObjects.Graphics[]
+  dynamic: Phaser.GameObjects.Container[]
+  upper: Phaser.GameObjects.Container[]
 }
 
 function drawDesk(graphics: Phaser.GameObjects.Graphics, definition: OfficeObjectDefinition) {
@@ -221,6 +222,86 @@ function drawOfficeObject(graphics: Phaser.GameObjects.Graphics, definition: Off
   }
 }
 
+// ============================================================================
+// BEGIN AddPortfolio-0008
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Sustituir los visuales Graphics por sprites locales sin perder el fallback.
+//
+// Descripción:
+// Cada Furniture vive en un Container con sombra y sprite. El origen inferior
+// conserva baseY, mientras que el fallback procedural reutiliza los dibujos
+// anteriores cuando el spritesheet no está disponible.
+// ============================================================================
+function createObjectShadow(
+  scene: Phaser.Scene,
+  definition: OfficeObjectDefinition,
+) {
+  const shadow = scene.add.graphics()
+  shadow.fillStyle(OFFICE_PALETTE.shadow, 0.38)
+  shadow.fillRoundedRect(
+    -definition.visualWidth / 2 + 6,
+    -16,
+    definition.visualWidth,
+    16,
+    6,
+  )
+  return shadow
+}
+
+function createFurnitureVisual(
+  scene: Phaser.Scene,
+  definition: OfficeObjectDefinition,
+  hasRealFurniture: boolean,
+) {
+  const container = scene.add.container(definition.x, definition.y)
+  container.add(createObjectShadow(scene, definition))
+
+  const asset = OFFICE_ASSET_MANIFEST[definition.asset]
+  const canUseRealAsset = hasRealFurniture
+    && asset.source === 'real'
+    && asset.spriteFrame !== undefined
+
+  if (!canUseRealAsset && asset.fallback !== 'procedural') {
+    throw new Error(`Furniture sin fallback disponible: ${definition.asset}.`)
+  }
+
+  if (canUseRealAsset) {
+    const sprite = scene.add.sprite(
+      0,
+      0,
+      OFFICE_FURNITURE_TEXTURE_KEY,
+      asset.spriteFrame,
+    )
+    sprite.setOrigin(0.5, 1)
+    sprite.setDisplaySize(definition.visualWidth, definition.visualHeight)
+    container.add(sprite)
+  } else {
+    const graphics = scene.add.graphics()
+    drawOfficeObject(graphics, definition)
+    container.add(graphics)
+  }
+
+  return container
+}
+
+function applyOfficeObjectDepth(
+  visual: Phaser.GameObjects.Container,
+  definition: OfficeObjectDefinition,
+) {
+  if (definition.depthMode === 'upper') {
+    visual.setDepth(DEPTH_CONFIG.upperLayer)
+    return
+  }
+
+  applyDepthSorting(visual, definition.y)
+}
+// ============================================================================
+// END AddPortfolio-0008
+// ============================================================================
+
 // ==========================================================================
 // BEGIN AddPortfolio-0004
 // Autor: Marco Antonio Cárdenas Sánchez
@@ -247,8 +328,13 @@ function drawOfficeObject(graphics: Phaser.GameObjects.Graphics, definition: Off
 // módulo desde la misma definición, y los objetos upper utilizan una capa fija.
 // ============================================================================
 export function createOfficeObjects(scene: Phaser.Scene): OfficeObjectVisuals {
-  const dynamic: Phaser.GameObjects.Graphics[] = []
-  const upper: Phaser.GameObjects.Graphics[] = []
+  const dynamic: Phaser.GameObjects.Container[] = []
+  const upper: Phaser.GameObjects.Container[] = []
+  const hasRealFurniture = scene.textures.exists(OFFICE_FURNITURE_TEXTURE_KEY)
+
+  if (!hasRealFurniture) {
+    console.warn('Office Furniture no disponible; se usa el fallback procedural.')
+  }
 
   for (const definition of OFFICE_OBJECTS) {
     const asset = OFFICE_ASSET_MANIFEST[definition.asset]
@@ -257,24 +343,13 @@ export function createOfficeObjects(scene: Phaser.Scene): OfficeObjectVisuals {
       continue
     }
 
-    const graphics = scene.add.graphics()
-    graphics.setPosition(definition.x, definition.y)
-    graphics.fillStyle(OFFICE_PALETTE.shadow, 0.38)
-    graphics.fillRoundedRect(
-      -definition.visualWidth / 2 + 6,
-      -16,
-      definition.visualWidth,
-      16,
-      6,
-    )
-    drawOfficeObject(graphics, definition)
+    const visual = createFurnitureVisual(scene, definition, hasRealFurniture)
+    applyOfficeObjectDepth(visual, definition)
 
     if (definition.depthMode === 'upper') {
-      graphics.setDepth(DEPTH_CONFIG.upperLayer)
-      upper.push(graphics)
+      upper.push(visual)
     } else {
-      applyDepthSorting(graphics, definition.y)
-      dynamic.push(graphics)
+      dynamic.push(visual)
     }
   }
 

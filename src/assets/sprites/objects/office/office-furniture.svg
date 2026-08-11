@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="384" height="192" viewBox="0 0 384 192" shape-rendering="crispEdges">
+  <!-- AddPortfolio-0008: frames de Furniture propios, 64 x 64 px. -->
+
+  <!-- desk: 0 -->
+  <g transform="translate(0 0)">
+    <path d="M7 23 53 13 58 35 12 46Z" fill="#9b684e"/>
+    <path d="M12 46 58 35 58 47 12 58Z" fill="#6f493c"/>
+    <path d="M17 48h6v10h-6zM49 40h6v10h-6z" fill="#2d2838"/>
+    <path d="M13 43 57 33" stroke="#d39b6e" stroke-width="2"/>
+  </g>
+
+  <!-- pc: 1 -->
+  <g transform="translate(64 0)">
+    <path d="M13 15 50 10 53 35 16 40Z" fill="#2d2838"/>
+    <path d="M18 18 46 14 48 31 20 35Z" fill="#38556b"/>
+    <path d="M21 21 44 18 45 23 22 26Z" fill="#70e1c1"/>
+    <path d="M31 37h9v10h-9zM23 47h25v5H23z" fill="#697789"/>
+    <path d="M19 54h31v4H19z" fill="#2d2838"/>
+  </g>
+
+  <!-- chair: 2 -->
+  <g transform="translate(128 0)">
+    <path d="M17 9h30v25H17z" fill="#2d2838"/>
+    <path d="M21 13h22v17H21z" fill="#b18cff"/>
+    <path d="M11 32h42v16H11z" fill="#2d2838"/>
+    <path d="M17 35h30v9H17z" fill="#805b8f"/>
+    <path d="M30 48h6v9h-6zM22 56h22v3H22z" fill="#697789"/>
+  </g>
+
+  <!-- bookshelf: 3 -->
+  <g transform="translate(192 0)">
+    <path d="M11 4h42v55H11z" fill="#6f493c"/>
+    <path d="M16 9h32v45H16z" fill="#503548"/>
+    <path d="M13 18h38v5H13zM13 33h38v5H13zM13 48h38v5H13z" fill="#9b684e"/>
+    <path d="M20 11h7v7h-7zM32 10h6v8h-6zM40 25h6v7h-6zM20 39h6v8h-6zM31 39h8v8h-8z" fill="#70e1c1"/>
+    <path d="M28 24h7v8h-7zM43 40h5v8h-5z" fill="#ffd166"/>
+  </g>
+
+  <!-- projectTable: 4 -->
+  <g transform="translate(256 0)">
+    <path d="M5 24 54 14 59 35 10 46Z" fill="#9b684e"/>
+    <path d="M10 46 59 35 59 48 10 59Z" fill="#6f493c"/>
+    <path d="M15 48h6v10h-6zM49 40h6v10h-6z" fill="#2d2838"/>
+    <path d="M18 26h16v8H18zM38 21h13v7H38z" fill="#e4d2b8"/>
+    <path d="M37 31h14v3H37z" fill="#70e1c1"/>
+  </g>
+
+  <!-- experienceDesk: 5 -->
+  <g transform="translate(320 0)">
+    <path d="M7 22 53 12 58 34 12 45Z" fill="#80533f"/>
+    <path d="M12 45 58 34 58 47 12 58Z" fill="#503548"/>
+    <path d="M17 47h6v11h-6zM49 39h6v11h-6z" fill="#2d2838"/>
+    <path d="M18 24 47 18 49 27 20 34Z" fill="#d39b6e"/>
+    <path d="M28 25h13v3H28z" fill="#ffd166"/>
+  </g>
+
+  <!-- sofa: 6 -->
+  <g transform="translate(0 64)">
+    <path d="M7 22h50v32H7z" fill="#2d2838"/>
+    <path d="M12 16h40v21H12z" fill="#b18cff"/>
+    <path d="M12 36h40v16H12z" fill="#805b8f"/>
+    <path d="M16 39h14v9H16zM34 39h14v9H34z" fill="#b18cff"/>
+    <path d="M4 27h8v26H4zM52 27h8v26h-8z" fill="#503548"/>
+    <path d="M12 53h40v6H12z" fill="#6f493c"/>
+  </g>
+
+  <!-- coffeeTable: 7 -->
+  <g transform="translate(64 64)">
+    <path d="M10 28 51 20 56 37 15 46Z" fill="#9b684e"/>
+    <path d="M15 46 56 37 56 49 15 58Z" fill="#6f493c"/>
+    <path d="M20 47h5v10h-5zM47 41h5v10h-5z" fill="#2d2838"/>
+    <path d="M25 29h13v5H25zM41 26h8v5h-8z" fill="#e4d2b8"/>
+  </g>
+
+  <!-- whiteboard: 8 -->
+  <g transform="translate(128 64)">
+    <path d="M9 8h46v37H9z" fill="#2d2838"/>
+    <path d="M14 13h36v27H14z" fill="#e4d2b8"/>
+    <path d="M20 20h20v4H20zM20 29h14v4H20z" fill="#70e1c1"/>
+    <path d="M40 25h6v8h-6z" fill="#ffd166"/>
+    <path d="M17 45h5v13h-5zM42 45h5v13h-5z" fill="#697789"/>
+    <path d="M12 57h40v4H12z" fill="#2d2838"/>
+  </g>
+
+  <!-- plantSmall: 9 -->
+  <g transform="translate(192 64)">
+    <path d="M20 43h25l-4 16H24Z" fill="#6f493c"/>
+    <path d="M23 46h19v5H23z" fill="#d39b6e"/>
+    <path d="M32 43V25" stroke="#4d8b68" stroke-width="4"/>
+    <path d="M31 29 19 19 24 15 34 25ZM34 31l14-10 3 6-16 9ZM32 25 28 9h7l3 16Z" fill="#4d8b68"/>
+    <path d="M23 17 18 12h8l4 8ZM43 24l8-7-1 10Z" fill="#78b77a"/>
+  </g>
+
+  <!-- plantLarge: 10 -->
+  <g transform="translate(256 64)">
+    <path d="M19 42h27l-4 17H23Z" fill="#6f493c"/>
+    <path d="M22 45h21v5H22z" fill="#d39b6e"/>
+    <path d="M32 43V22" stroke="#4d8b68" stroke-width="4"/>
+    <path d="M32 27 13 15l5-7 18 15ZM34 30l20-14 3 8-22 14ZM31 24 24 3h8l7 21Z" fill="#4d8b68"/>
+    <path d="M23 16 10 11l8-6 12 14ZM44 23l13-8-2 12Z" fill="#78b77a"/>
+  </g>
+
+  <!-- lamp: 11 -->
+  <g transform="translate(320 64)">
+    <path d="M16 19h32L42 35H22Z" fill="#ffd166"/>
+    <path d="M22 35h20v4H22zM31 39h4v14h-4zM19 53h28v6H19z" fill="#697789"/>
+    <path d="M23 23h18v4H23z" fill="#fff0aa"/>
+  </g>
+
+  <!-- trophyShelf: 12 -->
+  <g transform="translate(0 128)">
+    <path d="M8 9h48v50H8z" fill="#6f493c"/>
+    <path d="M13 14h38v40H13z" fill="#503548"/>
+    <path d="M10 31h44v5H10z" fill="#9b684e"/>
+    <path d="M20 19h7v10h-7zM38 18h7v11h-7z" fill="#ffd166"/>
+    <path d="M18 40h11v10H18zM36 40h11v10H36z" fill="#b18cff"/>
+    <path d="M22 16h3v-5h5v8h-2v3h-6zM40 15h3v-4h5v8h-2v3h-6z" fill="#ffd166"/>
+  </g>
+
+  <!-- phone: 13 -->
+  <g transform="translate(64 128)">
+    <path d="M15 23 48 17 53 38 20 44Z" fill="#2d2838"/>
+    <path d="M20 25 45 21 47 34 22 39Z" fill="#70e1c1"/>
+    <path d="M27 44h17v5H27z" fill="#697789"/>
+    <path d="M31 27h10v3H31z" fill="#38556b"/>
+  </g>
+
+  <!-- filingCabinet: 14 -->
+  <g transform="translate(128 128)">
+    <path d="M11 8h42v51H11z" fill="#697789"/>
+    <path d="M16 14h32v12H16zM16 30h32v12H16zM16 46h32v9H16z" fill="#805d70"/>
+    <path d="M29 19h7v3h-7zM29 35h7v3h-7zM29 49h7v3h-7z" fill="#e4d2b8"/>
+    <path d="M11 8h42v5H11z" fill="#9aa8b5"/>
+  </g>
+
+  <!-- door: 15 -->
+  <g transform="translate(192 128)">
+    <path d="M13 4h39v55H13z" fill="#6f493c"/>
+    <path d="M19 10h27v49H19z" fill="#503548"/>
+    <path d="M23 15h19v25H23z" fill="#80533f"/>
+    <path d="M39 42h5v5h-5z" fill="#ffd166"/>
+    <path d="M10 58h45v4H10z" fill="#2d2838"/>
+  </g>
+
+  <!-- rug: 16 -->
+  <g transform="translate(256 128)">
+    <path d="M5 17h54v35H5z" fill="#38556b"/>
+    <path d="M10 22h44v25H10z" fill="none" stroke="#70e1c1" stroke-width="3"/>
+    <path d="M16 29h32v11H16z" fill="#503548"/>
+    <path d="M21 32h22v5H21z" fill="#b18cff"/>
+  </g>
+</svg>

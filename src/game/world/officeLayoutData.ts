@@ -45,6 +45,18 @@ export type OfficeObjectDefinition = {
 // describe visual, categoría, zona semántica, Collision y Depth sin acoplar
 // coordenadas a OfficeScene ni activar interacciones.
 // ============================================================================
+// ============================================================================
+// BEGIN AddPortfolio-0009
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Compactar la composición del Office World sin separar sus zonas en salas.
+//
+// Descripción:
+// Las coordenadas agrupan Furniture por función, conservan rutas de circulación
+// y mantienen x/y como fuente data-driven de baseY y Collision.
+// ============================================================================
 export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
   {
     id: 'main-desk',
@@ -52,7 +64,7 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     category: 'furniture',
     zone: OFFICE_ZONES.about,
     x: 700,
-    y: 250,
+    y: 290,
     visualWidth: 190,
     visualHeight: 94,
     collision: { width: 160, height: 28 },
@@ -64,7 +76,7 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     category: 'device',
     zone: OFFICE_ZONES.about,
     x: 700,
-    y: 206,
+    y: 246,
     visualWidth: 54,
     visualHeight: 54,
     collision: null,
@@ -76,7 +88,7 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     category: 'furniture',
     zone: OFFICE_ZONES.about,
     x: 700,
-    y: 310,
+    y: 360,
     visualWidth: 48,
     visualHeight: 58,
     collision: { width: 34, height: 22 },
@@ -87,8 +99,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.phone,
     category: 'device',
     zone: OFFICE_ZONES.contact,
-    x: 1460,
-    y: 748,
+    x: 1120,
+    y: 630,
     visualWidth: 28,
     visualHeight: 18,
     collision: null,
@@ -99,8 +111,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.bookshelf,
     category: 'furniture',
     zone: OFFICE_ZONES.skills,
-    x: 190,
-    y: 270,
+    x: 250,
+    y: 290,
     visualWidth: 104,
     visualHeight: 150,
     collision: { width: 82, height: 28 },
@@ -111,8 +123,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.projectTable,
     category: 'furniture',
     zone: OFFICE_ZONES.projects,
-    x: 430,
-    y: 500,
+    x: 440,
+    y: 470,
     visualWidth: 220,
     visualHeight: 86,
     collision: { width: 190, height: 30 },
@@ -123,20 +135,20 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.experienceDesk,
     category: 'furniture',
     zone: OFFICE_ZONES.experience,
-    x: 1420,
-    y: 270,
+    x: 1080,
+    y: 310,
     visualWidth: 180,
     visualHeight: 90,
     collision: { width: 150, height: 28 },
     depthMode: 'dynamic',
   },
   {
-    id: 'experience-board',
+    id: 'skills-board',
     asset: OFFICE_OBJECT_KEYS.whiteboard,
     category: 'decoration',
-    zone: OFFICE_ZONES.experience,
-    x: 1150,
-    y: 210,
+    zone: OFFICE_ZONES.skills,
+    x: 410,
+    y: 230,
     visualWidth: 150,
     visualHeight: 82,
     collision: null,
@@ -147,8 +159,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.lamp,
     category: 'decoration',
     zone: OFFICE_ZONES.experience,
-    x: 1510,
-    y: 258,
+    x: 1250,
+    y: 285,
     visualWidth: 34,
     visualHeight: 72,
     collision: null,
@@ -159,8 +171,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.trophyShelf,
     category: 'furniture',
     zone: OFFICE_ZONES.achievements,
-    x: 1050,
-    y: 820,
+    x: 790,
+    y: 690,
     visualWidth: 180,
     visualHeight: 110,
     collision: { width: 156, height: 28 },
@@ -171,20 +183,47 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.sofa,
     category: 'furniture',
     zone: OFFICE_ZONES.contact,
-    x: 1500,
-    y: 780,
-    visualWidth: 210,
-    visualHeight: 94,
+    x: 1240,
+    y: 650,
+    visualWidth: 184,
+    visualHeight: 82,
     collision: { width: 180, height: 36 },
     depthMode: 'dynamic',
   },
+  // ========================================================================
+  // BEGIN AddPortfolio-0008
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Completar visualmente la pequeña zona de descanso de Contact.
+  //
+  // Descripción:
+  // El rug es decorativo, no agrega Collision ni interacción y permanece
+  // debajo del coffeeTable por su orden de baseY dentro de la composición.
+  // ========================================================================
+  {
+    id: 'contact-rug',
+    asset: OFFICE_OBJECT_KEYS.rug,
+    category: 'decoration',
+    zone: OFFICE_ZONES.contact,
+    x: 1240,
+    y: 760,
+    visualWidth: 150,
+    visualHeight: 52,
+    collision: null,
+    depthMode: 'dynamic',
+  },
+  // ========================================================================
+  // END AddPortfolio-0008
+  // ========================================================================
   {
     id: 'contact-table',
     asset: OFFICE_OBJECT_KEYS.coffeeTable,
     category: 'furniture',
     zone: OFFICE_ZONES.contact,
-    x: 1500,
-    y: 900,
+    x: 1240,
+    y: 780,
     visualWidth: 120,
     visualHeight: 48,
     collision: { width: 100, height: 20 },
@@ -195,8 +234,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.plantLarge,
     category: 'decoration',
     zone: OFFICE_ZONES.experience,
-    x: 1660,
-    y: 210,
+    x: 1330,
+    y: 300,
     visualWidth: 64,
     visualHeight: 112,
     collision: { width: 28, height: 22 },
@@ -207,8 +246,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.plantSmall,
     category: 'decoration',
     zone: OFFICE_ZONES.contact,
-    x: 1760,
-    y: 850,
+    x: 1380,
+    y: 720,
     visualWidth: 48,
     visualHeight: 82,
     collision: { width: 24, height: 18 },
@@ -219,8 +258,8 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     asset: OFFICE_OBJECT_KEYS.filingCabinet,
     category: 'furniture',
     zone: OFFICE_ZONES.projects,
-    x: 260,
-    y: 700,
+    x: 300,
+    y: 570,
     visualWidth: 72,
     visualHeight: 110,
     collision: { width: 56, height: 28 },
@@ -232,13 +271,16 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     category: 'decoration',
     zone: OFFICE_ZONES.contact,
     x: 944,
-    y: 1000,
-    visualWidth: 100,
-    visualHeight: 112,
+    y: 800,
+    visualWidth: 88,
+    visualHeight: 100,
     collision: null,
     depthMode: 'upper',
   },
 ]
+// ============================================================================
+// END AddPortfolio-0009
+// ============================================================================
 // ============================================================================
 // END AddPortfolio-0006
 // ============================================================================

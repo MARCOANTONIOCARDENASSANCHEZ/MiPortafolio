@@ -4,8 +4,8 @@ import { createOfficeTilemap, type OfficeTilemap } from './createOfficeTilemap'
 
 export type OfficeWorld = {
   tilemap: OfficeTilemap
-  objects: Phaser.GameObjects.Graphics[]
-  upperObjects: Phaser.GameObjects.Graphics[]
+  objects: Phaser.GameObjects.Container[]
+  upperObjects: Phaser.GameObjects.Container[]
 }
 
 // ============================================================================

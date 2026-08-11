@@ -124,14 +124,14 @@ src/assets/
 ├── maps/
 ├── tilesets/office/
 ├── sprites/player/
-├── sprites/objects/
+├── sprites/objects/office/office-furniture.svg
 ├── ui/
 └── placeholders/
 ```
 
-Las carpetas de mapas, sprites, UI y placeholders conservan `.gitkeep`; el
-primer tileset propio está en `src/assets/tilesets/office/office-tileset.svg`.
-No hay assets externos ni arte definitivo.
+Las carpetas de mapas, Player, UI y placeholders conservan `.gitkeep`; los
+assets propios actuales son `office-tileset.svg` y `office-furniture.svg`.
+No hay assets externos ni arte de terceros.
 
 Los assets definitivos del Office World deberán reemplazar los placeholders
 desde `src/assets/tilesets/office/` y `src/assets/sprites/objects/`. El
@@ -146,3 +146,7 @@ ocupa únicamente la zona que toca el suelo.
 
 Los cambios deben ser pequeños, respetar la separación React-Phaser y evitar
 modificar archivos que no estén relacionados con el objetivo del cambio.
+
+`DEBUG_CONFIG.physics` en `src/game/config.ts` controla los overlays de Arcade
+Physics. Su valor normal es `false`; puede activarse temporalmente para revisar
+Collision sin dejar rectángulos de debug en el portafolio.

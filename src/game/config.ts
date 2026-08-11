@@ -39,6 +39,25 @@ export const RENDER_CONFIG = {
 // END AddPortfolio-0004
 // ==========================================================================
 
+// ============================================================================
+// BEGIN AddPortfolio-0009
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Centralizar la visibilidad opcional de los cuerpos físicos de desarrollo.
+//
+// Descripción:
+// El portafolio no muestra rectángulos de Collision en ejecución normal. El
+// flag permite reactivar todos los overlays físicos desde un único lugar.
+// ============================================================================
+export const DEBUG_CONFIG = {
+  physics: false,
+} as const
+// ============================================================================
+// END AddPortfolio-0009
+// ============================================================================
+
 export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameConfig {
   return {
     type: Phaser.AUTO,
@@ -80,15 +99,15 @@ export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameCon
         // Fecha: 2026-08-11
         //
         // Propósito:
-        // Habilitar la visualización de Physics únicamente durante desarrollo.
+        // Mantener la visualización de Physics disponible para desarrollo.
         //
         // Descripción:
         // Los cuerpos dinámicos y estáticos ayudan a verificar límites y
-        // obstáculos sin exponer información de depuración en producción.
+        // obstáculos cuando DEBUG_CONFIG.physics se activa explícitamente.
         // ==================================================================
-        debug: import.meta.env.DEV,
-        debugShowBody: import.meta.env.DEV,
-        debugShowStaticBody: import.meta.env.DEV,
+        debug: DEBUG_CONFIG.physics,
+        debugShowBody: DEBUG_CONFIG.physics,
+        debugShowStaticBody: DEBUG_CONFIG.physics,
         // ==================================================================
         // END AddPortfolio-0002
         // ==================================================================

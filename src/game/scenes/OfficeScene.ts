@@ -95,7 +95,22 @@ export class OfficeScene extends Phaser.Scene {
     // ========================================================================
     configureWorldBounds(this, WORLD_BOUNDS)
 
-    this.player = createPlayer(this, 960, 540)
+    // ========================================================================
+    // BEGIN AddPortfolio-0009
+    // Autor: Marco Antonio Cárdenas Sánchez
+    // Fecha: 2026-08-11
+    //
+    // Propósito:
+    // Iniciar la primera vista sobre el núcleo habitado de la oficina.
+    //
+    // Descripción:
+    // El Player conserva su escala y comportamiento; solo cambia su punto de
+    // aparición para mostrar About, Projects, Experience y Contact cercanos.
+    // ========================================================================
+    this.player = createPlayer(this, 820, 500)
+    // ========================================================================
+    // END AddPortfolio-0009
+    // ========================================================================
     this.movementInput = createKeyboardInput(this)
     createWorldCollision(this, this.player)
     configureCamera(this, this.player, WORLD_BOUNDS)

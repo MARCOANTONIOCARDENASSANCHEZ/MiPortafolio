@@ -20,8 +20,23 @@ export type WorldBounds = {
 }
 
 export const TILEMAP_SIZE = {
-  width: 56,
-  height: 30,
+  // ========================================================================
+  // BEGIN AddPortfolio-0009
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Mantener una oficina compacta alrededor de sus áreas funcionales.
+  //
+  // Descripción:
+  // El World conserva espacio suficiente para circular, pero evita que el
+  // viewport muestre grandes regiones vacías alrededor del Furniture.
+  // ========================================================================
+  width: 48,
+  height: 25,
+  // ========================================================================
+  // END AddPortfolio-0009
+  // ========================================================================
 }
 
 export const WORLD_BOUNDS: WorldBounds = {

@@ -61,8 +61,9 @@ function createPlaceholderTileset(scene: Phaser.Scene) {
 
   graphics.fillStyle(OFFICE_PALETTE.floorCarpet, 1)
   graphics.fillRect(TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)
-  graphics.lineStyle(1, OFFICE_PALETTE.accentMint, 0.35)
-  graphics.strokeRect(TILE_SIZE + 3, 3, TILE_SIZE - 6, TILE_SIZE - 6)
+  graphics.fillStyle(OFFICE_PALETTE.wallTop, 0.35)
+  graphics.fillRect(TILE_SIZE + 7, 7, 2, 2)
+  graphics.fillRect(TILE_SIZE + 21, 21, 2, 2)
 
   graphics.fillStyle(OFFICE_PALETTE.wallBase, 1)
   graphics.fillRect(TILE_SIZE * 2, 0, TILE_SIZE, TILE_SIZE)
@@ -178,9 +179,24 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
   const wallUpper = createLayer('WallUpper')
   const decoration = createLayer('Decoration')
 
+  // ========================================================================
+  // BEGIN AddPortfolio-0009
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Dar jerarquía al piso y apoyar la agrupación de las áreas de la oficina.
+  //
+  // Descripción:
+  // Las alfombras se mantienen como parches funcionales dentro del mapa, sin
+  // repetir el borde de cada tile ni crear una cuadrícula visual inferior.
+  // ========================================================================
   ground.fill(OFFICE_TILE_INDEX.floorWood)
-  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 17, 12, 13, 5)
-  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 41, 22, 10, 4)
+  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 12, 11, 9, 4)
+  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 34, 19, 7, 3)
+  // ========================================================================
+  // END AddPortfolio-0009
+  // ========================================================================
 
   for (let tileX = 0; tileX < TILEMAP_SIZE.width; tileX += 1) {
     walls.putTileAt(OFFICE_TILE_INDEX.wallBase, tileX, 0)
@@ -197,7 +213,25 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
   walls.putTileAt(OFFICE_TILE_INDEX.wallCorner, TILEMAP_SIZE.width - 1, 0)
   wallUpper.putTileAt(OFFICE_TILE_INDEX.wallCorner, 0, 0)
   wallUpper.putTileAt(OFFICE_TILE_INDEX.wallCorner, TILEMAP_SIZE.width - 1, 0)
-  decoration.putTileAt(OFFICE_TILE_INDEX.doorway, 28, TILEMAP_SIZE.height - 1)
+  // ========================================================================
+  // BEGIN AddPortfolio-0009
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Reforzar las esquinas visibles y dar un umbral legible a la entrada.
+  //
+  // Descripción:
+  // Solo se extiende WallUpper una celda en los laterales superiores; el
+  // doorway queda en la fila interior del borde para no pegar la puerta al
+  // límite visual del viewport.
+  // ========================================================================
+  wallUpper.putTileAt(OFFICE_TILE_INDEX.wallTop, 0, 1)
+  wallUpper.putTileAt(OFFICE_TILE_INDEX.wallTop, TILEMAP_SIZE.width - 1, 1)
+  decoration.putTileAt(OFFICE_TILE_INDEX.doorway, 28, TILEMAP_SIZE.height - 2)
+  // ========================================================================
+  // END AddPortfolio-0009
+  // ========================================================================
 
   ground.setDepth(DEPTH_CONFIG.ground)
   walls.setDepth(DEPTH_CONFIG.walls)
