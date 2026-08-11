@@ -3,8 +3,8 @@
 ## Identidad
 
 `MiPortafolio` es un portafolio profesional interactivo. La experiencia se
-presenta como un mundo RPG 2D con vista superior, inspirado visualmente en la
-perspectiva de juegos como `Ragnarok Online`.
+presenta como un mundo RPG 2D con perspectiva top-down 3/4, inspirado
+visualmente en la perspectiva de juegos como `Ragnarok Online`.
 
 El identificador oficial para la trazabilidad de cambios es
 `AddPortfolio-NNNN`. El establecimiento de esta documentación y el registro
@@ -15,6 +15,17 @@ de la implementación existente corresponden a `AddPortfolio-0001`.
 El objetivo es combinar una interfaz profesional tradicional con un mundo
 explorable. React debe presentar la información del portafolio y Phaser debe
 proporcionar la experiencia interactiva del mundo.
+
+## Perspectiva Visual
+
+La perspectiva aceptada es top-down 3/4: la Camera observa principalmente
+desde arriba, pero los objetos, muebles, paredes y personajes deben conservar
+volumen visible en sus frentes y laterales. Esta definición corresponde a
+`DEC-007`.
+
+Los gráficos actuales siguen siendo provisionales y todavía no implementan el
+acabado visual definitivo ni un sistema completo de `Depth sorting` para todos
+los objetos.
 
 ## Alcance Actual
 

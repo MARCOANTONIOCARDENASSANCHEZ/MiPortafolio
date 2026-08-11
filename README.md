@@ -1,8 +1,8 @@
 # MiPortafolio
 
 MiPortafolio es un portafolio profesional interactivo presentado como un
-mundo RPG 2D con vista superior. La interfaz del portafolio está construida
-con React y el mundo explorable está construido con Phaser.
+mundo RPG 2D con perspectiva top-down 3/4. La interfaz del portafolio está
+construida con React y el mundo explorable está construido con Phaser.
 
 ## Estado actual
 

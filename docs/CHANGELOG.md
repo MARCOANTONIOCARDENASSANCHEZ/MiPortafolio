@@ -61,3 +61,19 @@ escalable sin crear todavía la oficina definitiva ni sistemas de interacción.
 - No se agregaron dependencias, assets externos, backend ni audio.
 - No se implementaron `InteractionSystem`, objetos interactivos, inventario,
   diálogos, NPCs ni ventanas finales del portafolio.
+
+## AddPortfolio-0003 — Perspectiva Visual
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Decisión arquitectónica documental
+
+Se registra `DEC-007` como decisión aceptada para la perspectiva visual
+top-down 3/4 del proyecto. No se modifica código ni se agrega funcionalidad.
+
+- La Camera observará principalmente desde arriba.
+- Los frentes y laterales conservarán volumen visual.
+- La decisión deberá guiar Tiles, Sprites, Player, Furniture, Collision,
+  Depth sorting, composición del mapa y Animations.
+- No se adoptará una perspectiva isométrica real ni una vista completamente
+  cenital sin aprobación explícita.

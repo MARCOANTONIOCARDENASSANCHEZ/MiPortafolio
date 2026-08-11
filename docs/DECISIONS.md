@@ -5,7 +5,7 @@ arquitectónico de `MiPortafolio`. No deben cambiarse sin aprobación explícita
 
 ## DEC-001 — React + Phaser
 
-**Estado:** Aceptada  
+**Estado:** Aceptada
 **Decisión:** React administra la UI del portafolio y Phaser administra el
 mundo RPG interactivo.  
 **Motivo:** Permite mantener la interfaz profesional desacoplada del ciclo de
@@ -51,3 +51,18 @@ escriben en español, conservando en inglés los nombres técnicos establecidos.
   
 **Motivo:** Centraliza el contexto del proyecto en el idioma de trabajo sin
 alterar APIs ni identificadores técnicos.
+
+## DEC-007 — Perspectiva Visual Top-Down 3/4
+
+**Estado:** Aceptada
+**Decisión:** `MiPortafolio` utilizará una perspectiva RPG 2D top-down 3/4.
+La Camera mostrará el escenario principalmente desde arriba, mientras los
+objetos, muebles, paredes y personajes conservarán volumen visual visible en
+sus frentes y laterales.
+**Motivo:** Acercar la experiencia visual al concepto de los mockups del
+proyecto y evitar una vista completamente cenital tipo tablero.
+
+Esta decisión debe considerarse al diseñar `Tiles`, `Sprites`, `Player`,
+`Furniture`, `Collision`, `Depth sorting`, composición del mapa y
+`Animations`. No se debe cambiar a una perspectiva isométrica real ni a una
+vista totalmente cenital sin aprobación explícita.

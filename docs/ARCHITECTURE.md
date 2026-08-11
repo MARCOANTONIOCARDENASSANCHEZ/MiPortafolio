@@ -11,6 +11,8 @@ La aplicación separa la presentación profesional de la simulación del mundo:
   de vida de React.
 - `OfficeScene` orquesta módulos especializados, pero no implementa todos los
   detalles de World, Input, Collision o Camera.
+- La composición visual seguirá una perspectiva top-down 3/4, sin convertir el
+  proyecto en una vista isométrica real.
 - No existe backend ni comunicación de runtime con `VegaSystem`.
 
 ## Diagrama Real Implementado
@@ -185,6 +187,17 @@ React sigue siendo responsable de la UI, overlays, ventanas y contenido
 profesional. Phaser sigue siendo responsable del World RPG, Player, Input,
 Camera, Collision y Physics. En esta implementación no hay comunicación de
 estado entre `OfficeScene` y los paneles React.
+
+## Perspectiva Visual
+
+`DEC-007` establece una perspectiva top-down 3/4. La Camera observa el mundo
+principalmente desde arriba, pero la futura composición de Tiles, Sprites,
+Furniture y paredes debe mostrar volumen en frentes y laterales.
+
+La implementación actual todavía utiliza gráficos provisionales. El Player
+actualiza su profundidad con base en su coordenada `y`, pero los elementos del
+layout se dibujan en un `Graphics` común; por tanto, el `Depth sorting` visual
+completo para objetos y muebles aún está planificado.
 
 ## Planificado
 
