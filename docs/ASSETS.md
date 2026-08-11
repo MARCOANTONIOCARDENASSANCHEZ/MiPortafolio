@@ -70,6 +70,11 @@ la zona Contact utiliza además un rug de `150 x 52 px` bajo el lounge. Las
 coordenadas de Furniture continúan en `officeLayoutData.ts`, con circulación
 abierta entre grupos y una sola habitación.
 
+Los objetos `main-desk`, `projects-table`, `skills-board`, `experience-desk`,
+`achievements-shelf` y `contact-sofa` tienen metadata de interacción provisional.
+Su `range` se declara junto al objeto y no modifica su `collision`; los sprites
+y el manifest de assets permanecen iguales.
+
 Si la textura real no está disponible, `createOfficeTilemap` muestra una
 advertencia y genera un único tileset procedural de respaldo. El juego no
 queda sin mapa, pero el respaldo sigue siendo provisional.

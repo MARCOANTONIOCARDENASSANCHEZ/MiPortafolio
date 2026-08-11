@@ -1,5 +1,6 @@
 import type { OfficeObjectKey } from './officeAssetCatalog'
 import { OFFICE_OBJECT_KEYS } from './officeAssetCatalog'
+import { INTERACTION_TYPES, type InteractionDefinition } from '../interaction/interactionTypes'
 
 export const OFFICE_ZONES = {
   about: 'About',
@@ -30,6 +31,22 @@ export type OfficeObjectDefinition = {
   visualHeight: number
   collision: OfficeCollisionDefinition
   depthMode: OfficeDepthMode
+  // ========================================================================
+  // BEGIN AddPortfolio-0010
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Asociar opcionalmente una zona interactiva a un objeto visual.
+  //
+  // Descripción:
+  // Interaction Range y tipo son metadata del dominio, independientes de la
+  // Collision física del objeto.
+  // ========================================================================
+  interaction?: InteractionDefinition
+  // ========================================================================
+  // END AddPortfolio-0010
+  // ========================================================================
 }
 
 // ============================================================================
@@ -69,6 +86,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 94,
     collision: { width: 160, height: 28 },
     depthMode: 'dynamic',
+    interaction: {
+      type: INTERACTION_TYPES.about,
+      label: 'About',
+      range: 130,
+    },
   },
   {
     id: 'main-pc',
@@ -129,6 +151,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 86,
     collision: { width: 190, height: 30 },
     depthMode: 'dynamic',
+    interaction: {
+      type: INTERACTION_TYPES.projects,
+      label: 'Projects',
+      range: 130,
+    },
   },
   {
     id: 'experience-desk',
@@ -141,6 +168,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 90,
     collision: { width: 150, height: 28 },
     depthMode: 'dynamic',
+    interaction: {
+      type: INTERACTION_TYPES.experience,
+      label: 'Experience',
+      range: 130,
+    },
   },
   {
     id: 'skills-board',
@@ -153,6 +185,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 82,
     collision: null,
     depthMode: 'upper',
+    interaction: {
+      type: INTERACTION_TYPES.skills,
+      label: 'Skills',
+      range: 125,
+    },
   },
   {
     id: 'experience-lamp',
@@ -177,6 +214,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 110,
     collision: { width: 156, height: 28 },
     depthMode: 'dynamic',
+    interaction: {
+      type: INTERACTION_TYPES.achievements,
+      label: 'Achievements',
+      range: 130,
+    },
   },
   {
     id: 'contact-sofa',
@@ -189,6 +231,11 @@ export const OFFICE_OBJECTS: OfficeObjectDefinition[] = [
     visualHeight: 82,
     collision: { width: 180, height: 36 },
     depthMode: 'dynamic',
+    interaction: {
+      type: INTERACTION_TYPES.contact,
+      label: 'Contact',
+      range: 140,
+    },
   },
   // ========================================================================
   // BEGIN AddPortfolio-0008

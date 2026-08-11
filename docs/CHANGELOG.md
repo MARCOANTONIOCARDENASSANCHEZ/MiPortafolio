@@ -307,3 +307,45 @@ actualizado con estos ajustes finales:
 
 La aprobación visual final continúa pendiente de la próxima validación manual
 de la oficina completa.
+
+## AddPortfolio-0010 — InteractionSystem Y PortfolioPanel
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Interacción provisional y bridge Phaser-React
+
+Se incorpora el primer flujo de interacción del Office World sobre la
+composición de `AddPortfolio-0009`, sin modificar Player, Camera, Collision,
+Depth sorting ni la composición visual.
+
+### Implementación Registrada
+
+- `InteractionType`, `InteractionDefinition` e `InteractionTarget` compartidos
+  y tipados.
+- Targets interactivos data-driven para About, Projects, Skills, Experience,
+  Achievements y Contact.
+- `Interaction Range` independiente de Collision.
+- Selección del objeto interactivo más cercano por distancia.
+- Prompt `[E] INTERACTUAR` sobre el Player cuando existe un target cercano.
+- Pulsación discreta mediante `Phaser.Input.Keyboard.JustDown`.
+- `InteractionBridge` por instancia de `PhaserGame`, sin EventBus global.
+- Estado `activePanel` en React.
+- `PortfolioPanel` provisional con contenido estático por zona.
+- Cierre mediante botón `X` y tecla `Escape`.
+- Phaser permanece montado al abrir y cerrar el panel.
+
+### Flujo
+
+```text
+Player
+  -> InteractionSystem
+      -> InteractionBridge
+          -> React activePanel
+              -> PortfolioPanel
+```
+
+### Fuera Del Alcance
+
+- No se implementaron triggers de dominio, NPCs, diálogos, quests, inventario,
+  contenido real de portfolio ni funcionalidades específicas de cada zona.
+- No se agregaron dependencias, assets, backend, APIs ni audio.

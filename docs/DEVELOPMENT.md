@@ -104,6 +104,9 @@ src/
 │   ├── entities/playerMovement.ts
 │   ├── entities/playerVisual.ts
 │   ├── input/createKeyboardInput.ts
+│   ├── interaction/interactionTypes.ts
+│   ├── interaction/interactionBridge.ts
+│   ├── interaction/createInteractionSystem.ts
 │   ├── rendering/depthSorting.ts
 │   ├── scenes/OfficeScene.ts
 │   ├── world/loadOfficeAssets.ts
@@ -114,6 +117,7 @@ src/
 │   ├── world/createOfficeObjects.ts
 │   ├── world/createOfficeWorld.ts
 │   └── world/officeLayout.ts
+├── components/PortfolioPanel.tsx
 └── main.tsx
 ```
 
@@ -150,3 +154,7 @@ modificar archivos que no estén relacionados con el objetivo del cambio.
 `DEBUG_CONFIG.physics` en `src/game/config.ts` controla los overlays de Arcade
 Physics. Su valor normal es `false`; puede activarse temporalmente para revisar
 Collision sin dejar rectángulos de debug en el portafolio.
+
+`InteractionSystem` comunica un target a React mediante el bridge entregado a
+la instancia de `PhaserGame`. No se debe reemplazar este flujo por un EventBus
+global ni desmontar Phaser al abrir o cerrar `PortfolioPanel`.

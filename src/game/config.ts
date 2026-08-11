@@ -1,5 +1,9 @@
 import Phaser from 'phaser'
 import { OfficeScene } from './scenes/OfficeScene'
+import {
+  INTERACTION_BRIDGE_REGISTRY_KEY,
+  type InteractionBridge,
+} from './interaction/interactionBridge'
 
 // ============================================================================
 // BEGIN AddPortfolio-0001
@@ -58,7 +62,22 @@ export const DEBUG_CONFIG = {
 // END AddPortfolio-0009
 // ============================================================================
 
-export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameConfig {
+// ============================================================================
+// BEGIN AddPortfolio-0010
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Entregar a la escena un bridge perteneciente a la instancia de PhaserGame.
+//
+// Descripción:
+// El registro de Phaser transporta una referencia tipada durante preBoot. No
+// se crea un EventBus global ni se reinicia Phaser cuando cambia React.
+// ============================================================================
+export function createGameConfig(
+  parent: HTMLElement,
+  interactionBridge: InteractionBridge,
+): Phaser.Types.Core.GameConfig {
   return {
     type: Phaser.AUTO,
     parent,
@@ -114,9 +133,17 @@ export function createGameConfig(parent: HTMLElement): Phaser.Types.Core.GameCon
         gravity: { x: 0, y: 0 },
       },
     },
+    callbacks: {
+      preBoot: (game) => {
+        game.registry.set(INTERACTION_BRIDGE_REGISTRY_KEY, interactionBridge)
+      },
+    },
     scene: [OfficeScene],
   }
 }
+// ============================================================================
+// END AddPortfolio-0010
+// ============================================================================
 // ============================================================================
 // END AddPortfolio-0001
 // ============================================================================

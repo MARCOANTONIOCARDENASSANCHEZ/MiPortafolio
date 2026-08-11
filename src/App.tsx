@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
 import { PhaserGame } from './game'
+import type { InteractionTarget } from './game/interaction/interactionTypes'
+import { PortfolioPanel } from './components/PortfolioPanel'
 import './App.css'
 
 // ============================================================================
@@ -15,6 +18,39 @@ import './App.css'
 // canvas interactivo de la oficina.
 // ============================================================================
 function App() {
+  // ========================================================================
+  // BEGIN AddPortfolio-0010
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Mantener en React el panel activo sin desmontar PhaserGame.
+  //
+  // Descripción:
+  // Phaser entrega un InteractionTarget por el bridge. React solo administra
+  // activePanel, su cierre y Escape; el juego continúa montado.
+  // ========================================================================
+  const [activePanel, setActivePanel] = useState<InteractionTarget | null>(null)
+
+  useEffect(() => {
+    if (!activePanel) {
+      return
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActivePanel(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleEscape)
+
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [activePanel])
+  // ========================================================================
+  // END AddPortfolio-0010
+  // ========================================================================
+
   return (
     <main className="portfolio-shell">
       <header className="portfolio-header">
@@ -36,7 +72,7 @@ function App() {
           <span className="coordinates">ROOM_01 / SAFE ZONE</span>
         </div>
         <div className="game-frame">
-          <PhaserGame />
+          <PhaserGame onInteractionOpen={(target) => setActivePanel(target)} />
         </div>
         <div className="game-card-footer">
           <span><kbd>W A S D</kbd> o <kbd>ARROWS</kbd> para moverte</span>
@@ -53,9 +89,15 @@ function App() {
         <article>
           <p className="panel-label">ACTIVE QUEST</p>
           <h2>Construir mundos digitales</h2>
-          <p>La oficina es el punto de partida. Pronto habrá objetos y proyectos interactivos.</p>
+          <p>La oficina es el punto de partida. Las zonas ya tienen paneles provisionales.</p>
         </article>
       </section>
+      {activePanel && (
+        <PortfolioPanel
+          target={activePanel}
+          onClose={() => setActivePanel(null)}
+        />
+      )}
     </main>
   )
 }

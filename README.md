@@ -18,14 +18,14 @@ una sombra visual sin Collision.
 El World incluye un Tilemap provisional con capas `Ground`, `Walls`,
 `WallUpper` y `Decoration`, además de Furniture local con profundidad visual
 basada en su `baseY`. La oficina utiliza un catálogo de assets y una
-distribución data-driven con zonas semánticas sin interacción activa. La
-composición actual agrupa las zonas dentro de una sola oficina y mantiene el
-debug de Collision desactivado para la ejecución normal.
+distribución data-driven con zonas semánticas e interacción provisional sin
+contenido real. La composición actual agrupa las zonas dentro de una sola
+oficina y mantiene el debug de Collision desactivado para la ejecución normal.
 
 La interfaz React actual incluye la cabecera del portafolio, el contenedor del
-mundo interactivo y dos paneles informativos provisionales. Todavía no existen
-proyectos interactivos, ventanas, overlays, objetos interactivos, backend, API,
-base de datos ni autenticación.
+mundo interactivo, dos paneles informativos provisionales y un
+`PortfolioPanel` abierto desde Phaser. El contenido de las zonas sigue siendo
+provisional; no existen backend, API, base de datos ni autenticación.
 
 ## Stack
 

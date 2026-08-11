@@ -31,7 +31,7 @@ Phaser.Game
 OfficeScene
     |------------------|------------------|------------------|------------------|
     v                  v                  v                  v                  v
-World                Player             Input              Collision           Camera
+    World                Player             Input              Collision           Camera
 createOfficeWorld    createPlayer       createKeyboardInput configureWorldBounds configureCamera
     |                playerMovement     WASD + Arrow Keys  OFFICE_OBJECTS       follow + bounds
     |--------------------------|
@@ -41,6 +41,11 @@ createOfficeWorld    createPlayer       createKeyboardInput configureWorldBounds
     Walls                      Sprites + Containers + Depth
     WallUpper                  Collision metadata
     Decoration
+
+InteractionSystem
+    |
+    v
+InteractionBridge -> React / PortfolioPanel
 
 Depth
     |
@@ -59,9 +64,10 @@ main.tsx
                    -> OfficeScene.preload()
                        -> preloadOfficeAssets()
                    -> OfficeScene.create()
-                       -> createOfficeWorld()
-                          -> Tilemap + Furniture
-                      -> Player + Input + Collision + Camera
+                        -> createOfficeWorld()
+                           -> Tilemap + Furniture
+                       -> Player + Input + Collision + Camera
+                       -> InteractionSystem
 ```
 
 ## Diagrama Mermaid
@@ -84,6 +90,9 @@ flowchart TD
     OfficeScene --> Input[Input / createKeyboardInput]
     OfficeScene --> Collision[Collision / createWorldCollision]
     OfficeScene --> Camera[Camera / configureCamera]
+    OfficeScene --> Interaction[InteractionSystem]
+    Interaction --> Bridge[InteractionBridge]
+    Bridge --> Panel[React / PortfolioPanel]
     Player --> Depth[Depth / applyDepthSorting]
     Furniture --> Depth
     Collision --> Physics[Arcade Physics]
@@ -122,10 +131,10 @@ desactiva `antialias` y activa `roundPixels`.
 
 ### `src/game/scenes/OfficeScene.ts`
 
-Es la única escena actual y actúa como orquestador. Carga el tileset local en
+Es la única escena actual y actúa como orquestador. Carga los assets locales en
 `preload()`, construye el World, crea el Player, conecta Input, Collision y
-Camera, y delega el movimiento. No calcula depth directamente, administra
-Tilemap internamente ni implementa `InteractionSystem`.
+Camera, y delega el movimiento e InteractionSystem. No calcula depth
+directamente ni administra Tilemap internamente.
 
 ### `src/game/world/worldConfig.ts`
 
@@ -153,6 +162,29 @@ Collision y `depthMode`. `AddPortfolio-0009` mantiene una segunda pasada de
 composición sobre estas coordenadas: acerca Projects, Skills, Experience y
 Contact, reduce el lounge y conserva una sola oficina con circulación. `OfficeScene`
 no contiene coordenadas de Furniture.
+
+### `src/game/interaction/interactionTypes.ts`
+
+Define `InteractionType`, `InteractionDefinition` e `InteractionTarget`. Es el
+contrato compartido entre metadata data-driven, Phaser y React.
+
+### `src/game/interaction/interactionBridge.ts`
+
+Define el bridge tipado que entrega un target desde Phaser a la instancia de
+React. Se registra durante `preBoot` en la instancia de Phaser; no usa eventos
+globales.
+
+### `src/game/interaction/createInteractionSystem.ts`
+
+Selecciona el objeto interactivo más cercano por distancia y `range`, muestra
+`[E] INTERACTUAR` y procesa `Phaser.Input.Keyboard.JustDown` para emitir el
+target. El rango es independiente de Collision.
+
+### `src/components/PortfolioPanel.tsx`
+
+Renderiza el panel provisional según `InteractionType`. React controla su
+estado, cierre por `X` y cierre por `Escape`; abrirlo o cerrarlo no desmonta
+`PhaserGame`.
 
 ### `src/game/world/officeLayout.ts`
 
@@ -343,13 +375,13 @@ contrato.
 
 React sigue siendo responsable de la UI, overlays, ventanas y contenido
 profesional. Phaser sigue siendo responsable del World RPG, Player, Tilemap,
-Input, Camera, Collision, Depth y Physics. No existe todavía comunicación de
-estado entre `OfficeScene` y los paneles React.
+Input, Camera, Collision, Depth, Physics e InteractionSystem. La comunicación
+puntual hacia React ocurre mediante `InteractionBridge` y `PortfolioPanel`.
 
 ## Planificado
 
 La estructura actual permite añadir sprites definitivos, cargar mapas JSON de
 Tiled, separar frentes y partes superiores de paredes, añadir animaciones del
-Player y convertir Furniture en objetos interactivos. No existen todavía
-`InteractionSystem`, indicadores, diálogos, inventario, NPCs ni conexión de
-objetos con paneles React.
+Player, sustituir el contenido provisional de `PortfolioPanel` y ampliar los
+targets interactivos. No existen todavía triggers de dominio, diálogos,
+inventario, NPCs ni conexión con contenido real.

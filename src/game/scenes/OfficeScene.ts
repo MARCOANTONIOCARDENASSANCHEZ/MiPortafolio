@@ -5,6 +5,8 @@ import { createPlayer } from '../entities/createPlayer'
 import { updatePlayerMovement } from '../entities/playerMovement'
 import type { Player } from '../entities/playerVisual'
 import { createKeyboardInput, readMovementDirection, type MovementInput } from '../input/createKeyboardInput'
+import { INTERACTION_BRIDGE_REGISTRY_KEY, type InteractionBridge } from '../interaction/interactionBridge'
+import { createInteractionSystem, type InteractionSystem } from '../interaction/createInteractionSystem'
 import { createOfficeWorld } from '../world/createOfficeWorld'
 import { preloadOfficeAssets } from '../world/loadOfficeAssets'
 import { WORLD_BOUNDS } from '../world/worldConfig'
@@ -72,6 +74,22 @@ export class OfficeScene extends Phaser.Scene {
   // END AddPortfolio-0005
   // ========================================================================
   private movementInput!: MovementInput
+  // ========================================================================
+  // BEGIN AddPortfolio-0010
+  // Autor: Marco Antonio Cárdenas Sánchez
+  // Fecha: 2026-08-11
+  //
+  // Propósito:
+  // Mantener el InteractionSystem como responsabilidad orquestada de la escena.
+  //
+  // Descripción:
+  // La implementación del sistema vive fuera de OfficeScene y se actualiza en
+  // el ciclo existente sin alterar Player Movement.
+  // ========================================================================
+  private interactionSystem!: InteractionSystem
+  // ========================================================================
+  // END AddPortfolio-0010
+  // ========================================================================
 
   constructor() {
     super('OfficeScene')
@@ -135,6 +153,34 @@ export class OfficeScene extends Phaser.Scene {
     // ========================================================================
     // END AddPortfolio-0009
     // ========================================================================
+    // ========================================================================
+    // BEGIN AddPortfolio-0010
+    // Autor: Marco Antonio Cárdenas Sánchez
+    // Fecha: 2026-08-11
+    //
+    // Propósito:
+    // Conectar InteractionSystem con el Player y el bridge de esta instancia.
+    //
+    // Descripción:
+    // La escena solo orquesta el sistema. Los rangos, targets y selección viven
+    // en módulos data-driven sin alterar Collision ni Depth sorting.
+    // ========================================================================
+    const interactionBridge = this.registry.get(
+      INTERACTION_BRIDGE_REGISTRY_KEY,
+    ) as InteractionBridge | undefined
+
+    if (!interactionBridge) {
+      throw new Error('No se encontró el bridge de InteractionSystem.')
+    }
+
+    this.interactionSystem = createInteractionSystem(
+      this,
+      this.player,
+      interactionBridge,
+    )
+    // ========================================================================
+    // END AddPortfolio-0010
+    // ========================================================================
     this.movementInput = createKeyboardInput(this)
     createWorldCollision(this, this.player)
     configureCamera(this, this.player, WORLD_BOUNDS)
@@ -150,6 +196,7 @@ export class OfficeScene extends Phaser.Scene {
 
   update() {
     updatePlayerMovement(this.player, readMovementDirection(this.movementInput))
+    this.interactionSystem.update()
   }
 }
 // ============================================================================

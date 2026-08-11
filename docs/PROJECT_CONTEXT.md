@@ -48,7 +48,12 @@ La implementación actual incluye:
 - Furniture local propio separado del Tilemap, con `Collision` y `Depth` desde
   definiciones data-driven y fallback procedural común.
 - Distribución provisional con zonas semánticas `About`, `Projects`, `Skills`,
-  `Experience`, `Achievements` y `Contact`, sin triggers.
+  `Experience`, `Achievements` y `Contact`, con targets interactivos
+  provisionales sin contenido final.
+- `InteractionSystem` con rango independiente de Collision, selección del
+  target más cercano, prompt `[E] INTERACTUAR` y pulsación discreta de `E`.
+- Bridge por instancia `PhaserGame` para abrir un `PortfolioPanel` en React sin
+  reiniciar Phaser ni utilizar un bus global.
 - Una única escena registrada: `OfficeScene`.
 - Una oficina provisional compacta con áreas funcionales agrupadas dentro de un
   mismo espacio.
@@ -75,14 +80,14 @@ Actualmente no existen:
 
 - Backend, API, base de datos o autenticación.
 - Persistencia de progreso o estado del jugador.
-- Proyectos, ventanas, overlays u objetos interactivos conectados al mundo.
+- Contenido real de Projects, Skills, Experience, Achievements, About o Contact.
 - Sprites, tilesets o assets externos de terceros para el mundo.
 - Spritesheet definitivo y animaciones artísticas del Player.
 - Mapas JSON de Tiled cargados desde assets.
 - Arte definitivo del Office Tileset y de los Furniture; los SVG actuales son
   bases gráficas propias y provisionales.
 - Escenas adicionales o transiciones entre escenas.
-- Objetos interactivos, zonas de interacción o `InteractionSystem`.
+- Sistema de interacción avanzado, triggers de dominio o persistencia de paneles.
 - Dependencia de runtime con `VegaSystem`.
 
 ## Límites Del Proyecto
@@ -108,11 +113,11 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0009`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0010`:
 
 - Sustituir los sprites provisionales por arte definitivo del mundo.
-- Añadir objetos interactivos y zonas de interacción.
-- Conectar la exploración con paneles React del portafolio.
+- Reemplazar el contenido provisional de las zonas por datos reales.
+- Conectar cada zona con contenido final del portafolio.
 - Añadir más escenas y navegación entre zonas.
 - Sustituir el Tilemap provisional por mapas y tilesets exportados desde Tiled.
 - Añadir sprites definitivos, spritesheets y animaciones del Player.
