@@ -106,6 +106,8 @@ src/
 │   ├── rendering/depthSorting.ts
 │   ├── scenes/OfficeScene.ts
 │   ├── world/worldConfig.ts
+│   ├── world/officeAssetCatalog.ts
+│   ├── world/officeLayoutData.ts
 │   ├── world/createOfficeTilemap.ts
 │   ├── world/createOfficeObjects.ts
 │   ├── world/createOfficeWorld.ts
@@ -118,7 +120,7 @@ La estructura de assets del mundo se conserva dentro de `src/assets/`:
 ```text
 src/assets/
 ├── maps/
-├── tilesets/
+├── tilesets/office/
 ├── sprites/player/
 ├── sprites/objects/
 ├── ui/
@@ -128,10 +130,16 @@ src/assets/
 Estas carpetas solo contienen `.gitkeep` por ahora; no hay assets externos ni
 archivos artísticos definitivos.
 
-El spritesheet definitivo del Player deberá reemplazar el placeholder desde
+Los assets definitivos del Office World deberán reemplazar los placeholders
+desde `src/assets/tilesets/office/` y `src/assets/sprites/objects/`. El
+spritesheet definitivo del Player deberá reemplazar el placeholder desde
 `src/assets/sprites/player/`. La integración deberá conservar las direcciones
 `down`, `up`, `left` y `right`, con estados `idle` y `walk`, sin mover Input,
 Player Movement, Camera, Collision ni Depth sorting.
+
+Los muebles se miden separando `visualWidth`/`visualHeight` de `collision`.
+`x` e `y` representan el punto inferior de apoyo (`baseY`); el Physics body
+ocupa únicamente la zona que toca el suelo.
 
 Los cambios deben ser pequeños, respetar la separación React-Phaser y evitar
 modificar archivos que no estén relacionados con el objetivo del cambio.

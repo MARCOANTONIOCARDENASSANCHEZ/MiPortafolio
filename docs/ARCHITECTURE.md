@@ -11,6 +11,8 @@ La aplicación separa la presentación profesional de la simulación del mundo:
   de vida de React.
 - `OfficeScene` orquesta módulos con responsabilidades reales, sin contener
   la implementación completa de cada sistema.
+- `OfficeWorld` se construye desde un catálogo de assets y una definición de
+  layout data-driven.
 - La composición visual utiliza una perspectiva top-down 3/4, según `DEC-007`.
 - No existe backend ni comunicación de runtime con `VegaSystem`.
 
@@ -31,12 +33,13 @@ OfficeScene
     v                  v                  v                  v                  v
 World                Player             Input              Collision           Camera
 createOfficeWorld    createPlayer       createKeyboardInput configureWorldBounds configureCamera
-    |                playerMovement     WASD + Arrow Keys  StaticGroup          follow + bounds
-    |--------------------|
-    v                    v
-Tilemap              Furniture
-Ground               createOfficeObjects
-Walls                Graphics + Depth
+    |                playerMovement     WASD + Arrow Keys  OFFICE_OBJECTS       follow + bounds
+    |--------------------------|
+    v                          v
+Tilemap                    OfficeObjects
+Ground                     officeLayoutData
+Walls                      Graphics + Depth
+WallUpper                  Collision metadata
 Decoration
 
 Depth
@@ -70,7 +73,10 @@ flowchart TD
     World --> Tilemap[Tilemap / createOfficeTilemap]
     Tilemap --> Ground[Ground]
     Tilemap --> Walls[Walls]
+    Tilemap --> WallUpper[WallUpper]
     Tilemap --> Decoration[Decoration]
+    World --> Catalog[officeAssetCatalog / Manifest]
+    World --> Layout[officeLayoutData / Office zones]
     World --> Furniture[Furniture / createOfficeObjects]
     OfficeScene --> Player[Player / createPlayer]
     OfficeScene --> Input[Input / createKeyboardInput]
@@ -124,30 +130,45 @@ implementa `InteractionSystem`.
 Centraliza `TILE_SIZE`, `TILEMAP_SIZE` y `WORLD_BOUNDS`. Es la única fuente de
 las dimensiones lógicas que comparten Tilemap, Camera y Collision.
 
+### `src/game/world/officeAssetCatalog.ts`
+
+Define `OFFICE_TILE_KEYS`, `OFFICE_OBJECT_KEYS`, `OFFICE_TILE_INDEX`,
+`OFFICE_PALETTE` y `OFFICE_ASSET_MANIFEST`. El manifest describe tipo, path
+futuro, frame, Collision y Depth. No carga paths inexistentes.
+
+### `src/game/world/officeLayoutData.ts`
+
+Define `OFFICE_OBJECTS`, `OFFICE_ZONES` y los tipos de composición. Cada
+objeto declara `id`, asset, categoría, zona, posición de apoyo, tamaño visual,
+Collision y `depthMode`. `OfficeScene` no contiene coordenadas de Furniture.
+
 ### `src/game/world/officeLayout.ts`
 
-Mantiene las definiciones geométricas de `OFFICE_OBSTACLES`. No dibuja ni crea
-cuerpos físicos; sus datos son consumidos por Furniture y Collision para
-mantener separadas esas responsabilidades.
+Mantiene el punto de entrada histórico para los datos de oficina y reexporta
+`OFFICE_OBJECTS` y `OFFICE_ZONES` desde `officeLayoutData`. No dibuja ni crea
+cuerpos físicos.
 
 ### `src/game/world/createOfficeWorld.ts`
 
 Compone el World visual llamando a `createOfficeTilemap` y
-`createOfficeObjects`. No administra Input, Camera, Collision ni interacciones.
+`createOfficeObjects`, y expone objetos dinámicos y upper por separado. No
+administra Input, Camera, Collision ni interacciones.
 
 ### `src/game/world/createOfficeTilemap.ts`
 
 Genera un tileset provisional local y un `Tilemap` ortogonal con las capas
-`Ground`, `Walls` y `Decoration`. `Ground` se rellena con el tile de suelo,
-`Walls` muestra el borde del mapa y `Decoration` coloca algunos tiles
+`Ground`, `Walls`, `WallUpper` y `Decoration`. `Ground` se rellena con madera
+y dos zonas de alfombra, `Walls` contiene la base visual del perímetro,
+`WallUpper` muestra la parte superior elevada y `Decoration` coloca elementos
 provisionales. Las capas son estáticas y no pasan por `Depth sorting` dinámico.
 
 ### `src/game/world/createOfficeObjects.ts`
 
-Genera Furniture provisional con `Graphics`. Cada objeto conserva volumen
-visible en su parte superior, frontal y lateral, y utiliza la base vertical
-como referencia para su profundidad. La representación visual no contiene el
-cuerpo de Collision.
+Genera Furniture provisional con `Graphics` a partir de `OFFICE_OBJECTS` y
+`OFFICE_ASSET_MANIFEST`. Incluye escritorios, PC, silla, librero, mesa de
+proyectos, sofá, pizarrón, plantas, archivador y estante de logros. Cada objeto
+conserva volumen visible y utiliza la base vertical como referencia para su
+profundidad. La representación visual no contiene el cuerpo de Collision.
 
 ### `src/game/entities/createPlayer.ts`
 
@@ -198,14 +219,17 @@ evitar desplazamientos subpixel innecesarios.
 
 ### `src/game/collision/createWorldCollision.ts`
 
-Configura los límites externos de `Arcade Physics`, crea un `StaticGroup` con
-cinco obstáculos y registra la colisión entre ese grupo y el Player. No
-calcula profundidad visual y no depende de las capas de Tilemap.
+Configura los límites externos de `Arcade Physics`, crea un `StaticGroup` para
+los objetos cuyo `collision` no es `null` y registra la colisión con el Player.
+El body se coloca bajo `baseY` y usa el tamaño físico declarado, no el tamaño
+visual completo. No calcula profundidad visual ni depende del dibujo de los
+objetos.
 
 ### `src/game/rendering/depthSorting.ts`
 
 Expone `DEPTH_CONFIG` y `applyDepthSorting`. Los elementos dinámicos reciben
-`dynamicBase + baseY`; Ground, Walls y Decoration mantienen depths estáticos.
+`dynamicBase + baseY`; Ground, Walls y Decoration mantienen depths estáticos y
+`WallUpper` usa `upperLayer`.
 Esto permite ordenar Player, NPCs futuros y Furniture sin dispersar llamadas a
 `setDepth`.
 
@@ -221,8 +245,9 @@ La composición real es:
 Ground       depth 0       TilemapLayer
 Walls        depth 20      TilemapLayer
 Decoration   depth 30      TilemapLayer
+WallUpper    depth 1900    TilemapLayer
 Furniture    1000 + baseY  Graphics dinámicos
-Player       1000 + y      Arcade Sprite
+Player       1000 + y + feetOffset  Arcade Sprite
 ```
 
 En el Player, `y` se sustituye conceptualmente por `y + feetOffset` para que
@@ -238,6 +263,19 @@ La prueba provisional contiene muebles con colisión y profundidad. El Player
 comienza debajo del mueble central, visible delante; al rodearlo y acercarse
 desde arriba, su profundidad queda menor y se muestra detrás.
 
+## Catálogo Y Composición
+
+El catálogo distingue tiles (`floorWood`, `floorCarpet`, `wallBase`, `wallTop`,
+`wallCorner`, `doorway`) y objetos (`desk`, `pc`, `chair`, `bookshelf`,
+`projectTable`, `experienceDesk`, `sofa`, `coffeeTable`, `whiteboard`,
+`plantSmall`, `plantLarge`, `lamp`, `trophyShelf`, `phone`, `filingCabinet`,
+`door`, `rug`). La paleta provisional vive en `OFFICE_PALETTE` y no es una
+decisión artística definitiva.
+
+Las zonas semánticas actuales son `About`, `Projects`, `Skills`, `Experience`,
+`Achievements` y `Contact`. Solo organizan la composición; no tienen triggers
+ni `InteractionSystem`.
+
 ## Tilemap Y Compatibilidad Con Tiled
 
 El Tilemap actual se genera desde una matriz vacía local y un tileset creado
@@ -248,7 +286,7 @@ La estructura preparada para assets es:
 ```text
 src/assets/
 ├── maps/.gitkeep
-├── tilesets/.gitkeep
+├── tilesets/office/.gitkeep
 ├── sprites/
 │   ├── player/.gitkeep
 │   └── objects/.gitkeep
@@ -269,9 +307,19 @@ Estas responsabilidades permanecen separadas:
 - Furniture y Tilemap definen la representación visual.
 - `createWorldCollision` define los cuerpos físicos.
 - `applyDepthSorting` define el orden de dibujado de los elementos dinámicos.
+- `WallUpper` y los objetos `depthMode: 'upper'` pertenecen a una capa fija
+  superior y no se mezclan con cuerpos físicos.
 
 Un objeto futuro podrá tener las tres partes sin obligar a que una conozca la
 implementación interna de las otras.
+
+## Reemplazo De Placeholders
+
+Los paths del manifest apuntan a futuros archivos en
+`src/assets/tilesets/office/` y `src/assets/sprites/objects/`. Cuando exista
+pixel art definitivo, se reemplaza la generación procedural por carga de esos
+assets y se conserva el contrato de asset key, tamaño, baseY, Collision y
+Depth. Los mapas Tiled JSON seguirán el mismo contrato.
 
 ## React Y Phaser
 

@@ -40,8 +40,13 @@ La implementación actual incluye:
   responsive mediante `Phaser.Scale.FIT`.
 - Un World provisional de `1792 x 960`, mayor que el viewport.
 - Un Tilemap provisional ortogonal de `56 x 30` tiles con `TILE_SIZE` de `32`.
-- Capas visuales `Ground`, `Walls` y `Decoration` generadas localmente.
-- Furniture provisional separado del Tilemap y ordenado mediante `Depth`.
+- Catálogo y manifest provisional de assets para tiles y objetos de oficina.
+- Capas visuales `Ground`, `Walls`, `WallUpper` y `Decoration` generadas
+  localmente.
+- Furniture provisional separado del Tilemap, con `Collision` y `Depth` desde
+  definiciones data-driven.
+- Distribución provisional con zonas semánticas `About`, `Projects`, `Skills`,
+  `Experience`, `Achievements` y `Contact`, sin triggers.
 - Una única escena registrada: `OfficeScene`.
 - Una oficina provisional dibujada con `Phaser.GameObjects.Graphics`.
 - Un Player basado en `Phaser.Physics.Arcade.Sprite`, sin imagen externa.
@@ -54,7 +59,7 @@ La implementación actual incluye:
 - Movimiento del Player separado en `playerMovement`.
 - Camera principal siguiendo al Player dentro de los límites del World.
 - Límites externos implementados con `Arcade Physics`.
-- Cinco obstáculos estáticos provisionales para demostrar Collision.
+- Collision estática derivada de los objetos de oficina que declaran body.
 - Debug de cuerpos de Physics habilitado únicamente durante desarrollo.
 - Renderizado pixel-art centralizado con `pixelArt`, `antialias` y
   `roundPixels`.
@@ -71,6 +76,7 @@ Actualmente no existen:
 - Sprites, tilesets o assets externos para el mundo.
 - Spritesheet definitivo y animaciones artísticas del Player.
 - Mapas JSON de Tiled cargados desde assets.
+- Arte definitivo del Office Tileset y de los Furniture.
 - Escenas adicionales o transiciones entre escenas.
 - Objetos interactivos, zonas de interacción o `InteractionSystem`.
 - Dependencia de runtime con `VegaSystem`.
@@ -98,7 +104,7 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0005`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0006`:
 
 - Incorporar sprites y assets del mundo.
 - Añadir objetos interactivos y zonas de interacción.

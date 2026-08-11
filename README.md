@@ -15,7 +15,9 @@ viewport.
 El Player distingue las cuatro direcciones, estados `idle` y `walk`, y utiliza
 una sombra visual sin Collision.
 El World incluye un Tilemap provisional con capas `Ground`, `Walls` y
-`Decoration`, además de Furniture con profundidad visual basada en su `baseY`.
+`WallUpper` y `Decoration`, además de Furniture con profundidad visual basada
+en su `baseY`. La oficina utiliza un catálogo de assets y una distribución
+data-driven con zonas semánticas sin interacción activa.
 
 La interfaz React actual incluye la cabecera del portafolio, el contenedor del
 mundo interactivo y dos paneles informativos provisionales. Todavía no existen

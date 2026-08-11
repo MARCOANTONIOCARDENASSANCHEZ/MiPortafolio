@@ -134,3 +134,37 @@ Se reemplaza el gráfico único provisional por una estructura basada en
 - No se agregó spritesheet artístico, audio ni asset externo.
 - No se implementaron animaciones finales ni controles mobile.
 - No se modificaron Camera, Collision, Tilemap ni React UI.
+
+## AddPortfolio-0006 — Office Tileset Foundation
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Base visual y estructural del Office World
+
+Se transforma la prueba de oficina en una composición provisional data-driven,
+sin descargar assets, agregar dependencias ni implementar interacción.
+
+### Implementación Registrada
+
+- Catálogo centralizado de tiles, objetos, palette y manifest.
+- Definiciones de `OFFICE_OBJECTS` con categoría, zona, visual, `baseY`,
+  Collision y `depthMode`.
+- Zonas semánticas `About`, `Projects`, `Skills`, `Experience`, `Achievements`
+  y `Contact` sin triggers.
+- Tilemap con `Ground`, `Walls`, `WallUpper` y `Decoration`.
+- Floor de madera y dos áreas de alfombra provisionales.
+- Wall Base y Wall Upper separados visualmente.
+- Placeholders diferenciados para desk, PC, chair, bookshelf, project table,
+  experience desk, sofa, whiteboard, plants, filing cabinet y trophy shelf.
+- Collision derivada de la zona inferior de los muebles, separada de su visual.
+- `upperLayer` centralizado para paredes y objetos elevados.
+- Rutas futuras documentadas para `src/assets/tilesets/office/` y
+  `src/assets/sprites/objects/`.
+
+### Fuera Del Alcance
+
+- No se agregaron assets artísticos definitivos ni mapas JSON de Tiled.
+- No se implementaron triggers, `InteractionSystem`, NPCs, diálogos, audio ni
+  UI final.
+- No se modificó la arquitectura React + Phaser ni el Player de
+  `AddPortfolio-0005`.

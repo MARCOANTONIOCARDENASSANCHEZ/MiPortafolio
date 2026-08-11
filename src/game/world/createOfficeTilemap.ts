@@ -1,35 +1,49 @@
 import Phaser from 'phaser'
+import { DEPTH_CONFIG } from '../rendering/depthSorting'
+import {
+  OFFICE_PALETTE,
+  OFFICE_TILE_INDEX,
+} from './officeAssetCatalog'
 import { TILE_SIZE, TILEMAP_SIZE, WORLD_BOUNDS } from './worldConfig'
 
 const TILESET_TEXTURE_KEY = 'placeholder-tileset'
 const TILESET_NAME = 'office-placeholder'
-
-const TILE_INDEX = {
-  ground: 0,
-  wall: 1,
-  decoration: 2,
-}
+const TILESET_TILE_COUNT = 6
 
 export type OfficeTilemap = {
   map: Phaser.Tilemaps.Tilemap
   ground: Phaser.Tilemaps.TilemapLayer
   walls: Phaser.Tilemaps.TilemapLayer
+  wallUpper: Phaser.Tilemaps.TilemapLayer
   decoration: Phaser.Tilemaps.TilemapLayer
 }
 
-// ============================================================================
+// ==========================================================================
 // BEGIN AddPortfolio-0004
 // Autor: Marco Antonio Cárdenas Sánchez
 // Fecha: 2026-08-11
 //
-// Propósito:
+// Propósito histórico:
 // Crear un Tilemap provisional con capas separadas para el World.
 //
+// Descripción histórica:
+// AddPortfolio-0004 generaba un tileset mínimo y las capas Ground, Walls y
+// Decoration. AddPortfolio-0006 conserva esa base y añade catálogo, alfombra,
+// separación Wall Base / Wall Upper y una composición más reconocible.
+// ==========================================================================
+// ==========================================================================
+// BEGIN AddPortfolio-0006
+// Autor: Marco Antonio Cárdenas Sánchez
+// Fecha: 2026-08-11
+//
+// Propósito:
+// Construir las capas Tilemap de la oficina provisional.
+//
 // Descripción:
-// La matriz y el tileset se generan localmente para validar la integración sin
-// assets externos. La forma de creación es compatible con la futura sustitución
-// por un Tilemap JSON exportado desde Tiled.
-// ============================================================================
+// Los tiles se generan localmente para validar repetición, escala y capas sin
+// cargar archivos inexistentes. El contrato de capas puede reemplazarse por un
+// mapa JSON de Tiled sin cambiar Player, Camera, Collision o React.
+// ==========================================================================
 function createPlaceholderTileset(scene: Phaser.Scene) {
   if (scene.textures.exists(TILESET_TEXTURE_KEY)) {
     return
@@ -37,28 +51,43 @@ function createPlaceholderTileset(scene: Phaser.Scene) {
 
   const graphics = scene.add.graphics()
 
-  graphics.fillStyle(0x26364c, 1)
+  graphics.fillStyle(OFFICE_PALETTE.floorWood, 1)
   graphics.fillRect(0, 0, TILE_SIZE, TILE_SIZE)
-  graphics.lineStyle(1, 0x354b66, 0.45)
-  graphics.strokeRect(0, 0, TILE_SIZE, TILE_SIZE)
+  graphics.lineStyle(1, OFFICE_PALETTE.floorWoodLine, 0.45)
+  graphics.lineBetween(0, TILE_SIZE - 5, TILE_SIZE, TILE_SIZE - 5)
 
-  graphics.fillStyle(0x526984, 1)
+  graphics.fillStyle(OFFICE_PALETTE.floorCarpet, 1)
   graphics.fillRect(TILE_SIZE, 0, TILE_SIZE, TILE_SIZE)
-  graphics.fillStyle(0x354b66, 1)
-  graphics.fillRect(TILE_SIZE + 2, 4, TILE_SIZE - 4, 8)
-  graphics.fillRect(TILE_SIZE + 2, 20, TILE_SIZE - 4, 8)
+  graphics.lineStyle(1, OFFICE_PALETTE.accentMint, 0.35)
+  graphics.strokeRect(TILE_SIZE + 3, 3, TILE_SIZE - 6, TILE_SIZE - 6)
 
-  graphics.fillStyle(0x30445a, 1)
+  graphics.fillStyle(OFFICE_PALETTE.wallBase, 1)
   graphics.fillRect(TILE_SIZE * 2, 0, TILE_SIZE, TILE_SIZE)
-  graphics.fillStyle(0x70e1c1, 1)
-  graphics.fillCircle(TILE_SIZE * 2 + 16, 16, 5)
+  graphics.fillStyle(OFFICE_PALETTE.wallShadow, 1)
+  graphics.fillRect(TILE_SIZE * 2, 19, TILE_SIZE, 13)
 
-  graphics.fillStyle(0x1d2b40, 1)
+  graphics.fillStyle(OFFICE_PALETTE.wallTop, 1)
   graphics.fillRect(TILE_SIZE * 3, 0, TILE_SIZE, TILE_SIZE)
-  graphics.fillStyle(0xffd166, 1)
-  graphics.fillRect(TILE_SIZE * 3 + 12, 7, 8, 18)
+  graphics.fillStyle(OFFICE_PALETTE.wallHighlight, 1)
+  graphics.fillRect(TILE_SIZE * 3, 0, TILE_SIZE, 7)
+  graphics.fillStyle(OFFICE_PALETTE.wallShadow, 1)
+  graphics.fillRect(TILE_SIZE * 3, 25, TILE_SIZE, 7)
 
-  graphics.generateTexture(TILESET_TEXTURE_KEY, TILE_SIZE * 4, TILE_SIZE)
+  graphics.fillStyle(OFFICE_PALETTE.wallCorner, 1)
+  graphics.fillRect(TILE_SIZE * 4, 0, TILE_SIZE, TILE_SIZE)
+  graphics.fillStyle(OFFICE_PALETTE.wallHighlight, 1)
+  graphics.fillRect(TILE_SIZE * 4, 0, TILE_SIZE, 7)
+  graphics.fillStyle(OFFICE_PALETTE.wallShadow, 1)
+  graphics.fillRect(TILE_SIZE * 4 + 20, 7, 12, TILE_SIZE - 7)
+
+  graphics.fillStyle(OFFICE_PALETTE.furnitureWoodLight, 1)
+  graphics.fillRect(TILE_SIZE * 5, 0, TILE_SIZE, TILE_SIZE)
+  graphics.fillStyle(OFFICE_PALETTE.wallShadow, 1)
+  graphics.fillRect(TILE_SIZE * 5 + 4, 4, TILE_SIZE - 8, TILE_SIZE - 4)
+  graphics.fillStyle(OFFICE_PALETTE.accentGold, 1)
+  graphics.fillRect(TILE_SIZE * 5 + 10, 9, 12, 4)
+
+  graphics.generateTexture(TILESET_TEXTURE_KEY, TILE_SIZE * TILESET_TILE_COUNT, TILE_SIZE)
   graphics.destroy()
 }
 
@@ -93,9 +122,9 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
     throw new Error('No se pudo crear el tileset provisional del World.')
   }
 
-  const ground = requireLayer(
+  const createLayer = (name: string) => requireLayer(
     map.createBlankLayer(
-      'Ground',
+      name,
       tileset,
       WORLD_BOUNDS.x,
       WORLD_BOUNDS.y,
@@ -104,57 +133,45 @@ export function createOfficeTilemap(scene: Phaser.Scene): OfficeTilemap {
       TILE_SIZE,
       TILE_SIZE,
     ),
-    'Ground',
-  )
-  const walls = requireLayer(
-    map.createBlankLayer(
-      'Walls',
-      tileset,
-      WORLD_BOUNDS.x,
-      WORLD_BOUNDS.y,
-      TILEMAP_SIZE.width,
-      TILEMAP_SIZE.height,
-      TILE_SIZE,
-      TILE_SIZE,
-    ),
-    'Walls',
-  )
-  const decoration = requireLayer(
-    map.createBlankLayer(
-      'Decoration',
-      tileset,
-      WORLD_BOUNDS.x,
-      WORLD_BOUNDS.y,
-      TILEMAP_SIZE.width,
-      TILEMAP_SIZE.height,
-      TILE_SIZE,
-      TILE_SIZE,
-    ),
-    'Decoration',
+    name,
   )
 
-  ground.fill(TILE_INDEX.ground)
+  const ground = createLayer('Ground')
+  const walls = createLayer('Walls')
+  const wallUpper = createLayer('WallUpper')
+  const decoration = createLayer('Decoration')
+
+  ground.fill(OFFICE_TILE_INDEX.floorWood)
+  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 17, 12, 13, 5)
+  ground.fill(OFFICE_TILE_INDEX.floorCarpet, 41, 22, 10, 4)
 
   for (let tileX = 0; tileX < TILEMAP_SIZE.width; tileX += 1) {
-    walls.putTileAt(TILE_INDEX.wall, tileX, 0)
-    walls.putTileAt(TILE_INDEX.wall, tileX, TILEMAP_SIZE.height - 1)
+    walls.putTileAt(OFFICE_TILE_INDEX.wallBase, tileX, 0)
+    walls.putTileAt(OFFICE_TILE_INDEX.wallBase, tileX, TILEMAP_SIZE.height - 1)
+    wallUpper.putTileAt(OFFICE_TILE_INDEX.wallTop, tileX, 0)
   }
 
   for (let tileY = 1; tileY < TILEMAP_SIZE.height - 1; tileY += 1) {
-    walls.putTileAt(TILE_INDEX.wall, 0, tileY)
-    walls.putTileAt(TILE_INDEX.wall, TILEMAP_SIZE.width - 1, tileY)
+    walls.putTileAt(OFFICE_TILE_INDEX.wallBase, 0, tileY)
+    walls.putTileAt(OFFICE_TILE_INDEX.wallBase, TILEMAP_SIZE.width - 1, tileY)
   }
 
-  decoration.putTileAt(TILE_INDEX.decoration, 5, 5)
-  decoration.putTileAt(TILE_INDEX.decoration, 50, 23)
-  decoration.putTileAt(TILE_INDEX.decoration, 48, 6)
+  walls.putTileAt(OFFICE_TILE_INDEX.wallCorner, 0, 0)
+  walls.putTileAt(OFFICE_TILE_INDEX.wallCorner, TILEMAP_SIZE.width - 1, 0)
+  wallUpper.putTileAt(OFFICE_TILE_INDEX.wallCorner, 0, 0)
+  wallUpper.putTileAt(OFFICE_TILE_INDEX.wallCorner, TILEMAP_SIZE.width - 1, 0)
+  decoration.putTileAt(OFFICE_TILE_INDEX.doorway, 28, TILEMAP_SIZE.height - 1)
 
-  ground.setDepth(0)
-  walls.setDepth(20)
-  decoration.setDepth(30)
+  ground.setDepth(DEPTH_CONFIG.ground)
+  walls.setDepth(DEPTH_CONFIG.walls)
+  decoration.setDepth(DEPTH_CONFIG.decoration)
+  wallUpper.setDepth(DEPTH_CONFIG.upperLayer)
 
-  return { map, ground, walls, decoration }
+  return { map, ground, walls, wallUpper, decoration }
 }
-// ============================================================================
+// ==========================================================================
+// END AddPortfolio-0006
+// ==========================================================================
+// ==========================================================================
 // END AddPortfolio-0004
-// ============================================================================
+// ==========================================================================
