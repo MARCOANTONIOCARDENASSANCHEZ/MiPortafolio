@@ -6,15 +6,16 @@ con React y el mundo explorable está construido con Phaser.
 
 ## Estado actual
 
-La implementación inicial contiene una oficina provisional dibujada sin
-assets externos, un personaje provisional y una única escena llamada
-`OfficeScene`. El personaje se puede mover con `WASD` y las flechas del
-teclado, y queda limitado por los bordes de la habitación mediante `Arcade Physics`.
+La implementación actual contiene una oficina provisional dibujada sin assets
+externos, un personaje provisional y una única escena llamada `OfficeScene`.
+El personaje se puede mover con `WASD` y las flechas del teclado, queda
+limitado por los bordes del World y colisiona con obstáculos provisionales.
+La Camera sigue al Player dentro de un World mayor que el viewport.
 
 La interfaz React actual incluye la cabecera del portafolio, el contenedor del
 mundo interactivo y dos paneles informativos provisionales. Todavía no existen
-proyectos interactivos, ventanas, overlays, objetos interactivos, cámara
-personalizada, backend, API, base de datos ni autenticación.
+proyectos interactivos, ventanas, overlays, objetos interactivos, backend, API,
+base de datos ni autenticación.
 
 ## Stack
 

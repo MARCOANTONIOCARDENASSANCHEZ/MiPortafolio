@@ -25,14 +25,19 @@ La implementación actual incluye:
 
 - Una interfaz React provisional para presentar el portafolio.
 - Un componente `PhaserGame` que crea y destruye la instancia de `Phaser.Game`.
-- Una configuración de juego con tamaño lógico de `960 x 540` y escala
+- Una configuración de juego con viewport lógico de `960 x 540` y escala
   responsive mediante `Phaser.Scale.FIT`.
+- Un World provisional de `1824 x 984`, mayor que el viewport.
 - Una única escena registrada: `OfficeScene`.
 - Una oficina provisional dibujada con `Phaser.GameObjects.Graphics`.
 - Un personaje provisional generado en memoria, sin imagen externa.
 - Movimiento mediante `WASD` y las flechas del teclado.
-- Límites de habitación implementados con los límites del mundo de
-  `Arcade Physics`.
+- Input centralizado en `createKeyboardInput`.
+- Movimiento del Player separado en `playerMovement`.
+- Camera principal siguiendo al Player dentro de los límites del World.
+- Límites externos implementados con `Arcade Physics`.
+- Cinco obstáculos estáticos provisionales para demostrar Collision.
+- Debug de cuerpos de Physics habilitado únicamente durante desarrollo.
 - Lógica de velocidad diagonal normalizada y profundidad visual basada en la
   coordenada `y` del personaje.
 
@@ -43,9 +48,9 @@ Actualmente no existen:
 - Backend, API, base de datos o autenticación.
 - Persistencia de progreso o estado del jugador.
 - Proyectos, ventanas, overlays u objetos interactivos conectados al mundo.
-- Cámara personalizada o seguimiento de cámara.
 - Sprites, tilesets o assets externos para el mundo.
 - Escenas adicionales o transiciones entre escenas.
+- Objetos interactivos, zonas de interacción o `InteractionSystem`.
 - Dependencia de runtime con `VegaSystem`.
 
 ## Límites Del Proyecto
@@ -57,9 +62,9 @@ UI.
 Phaser es responsable principalmente del mundo RPG, escenas, `Player`,
 movimiento, cámara, colisiones, objetos interactivos y zonas de interacción.
 De esta lista, la implementación actual cubre la escena, `Player`,
-movimiento y colisiones. La cámara, los objetos y las zonas de interacción
-están definidos como responsabilidades del dominio Phaser, pero aún no están
-implementados.
+movimiento, Camera y Collision. Los objetos interactivos y las zonas de
+interacción están definidos como responsabilidades del dominio Phaser, pero
+aún no están implementados.
 
 ## Relación Con VegaSystem
 
@@ -71,7 +76,7 @@ compartida obligatoria ni una dependencia de compilación entre ambos.
 ## Planificado
 
 Las siguientes capacidades pertenecen a la dirección prevista del proyecto,
-pero no forman parte de la arquitectura implementada en `AddPortfolio-0001`:
+pero no forman parte de la arquitectura implementada en `AddPortfolio-0002`:
 
 - Incorporar sprites y assets del mundo.
 - Añadir objetos interactivos y zonas de interacción.

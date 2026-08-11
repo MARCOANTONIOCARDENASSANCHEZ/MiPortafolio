@@ -10,6 +10,7 @@ debe leer, en conjunto, los siguientes archivos:
 - `docs/ARCHITECTURE.md`
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT.md`
+- `docs/CHANGELOG.md`
 
 La documentación de `docs/` es el contexto autoritativo del proyecto.
 
@@ -96,7 +97,11 @@ src/
 │   ├── PhaserGame.tsx
 │   ├── config.ts
 │   ├── index.ts
+│   ├── camera/configureCamera.ts
+│   ├── collision/createWorldCollision.ts
 │   ├── entities/createPlayer.ts
+│   ├── entities/playerMovement.ts
+│   ├── input/createKeyboardInput.ts
 │   ├── scenes/OfficeScene.ts
 │   └── world/officeLayout.ts
 └── main.tsx

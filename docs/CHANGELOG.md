@@ -1,9 +1,9 @@
-# Changelog
+# Historial De Cambios
 
 ## AddPortfolio-0001 — Establecimiento Inicial
 
-**Fecha:** 2026-08-11  
-**Autor:** Marco Antonio Cárdenas Sánchez  
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
 **Tipo:** Documentación y registro de implementación existente
 
 Se establece la documentación base, la arquitectura y las reglas oficiales
@@ -33,3 +33,31 @@ implementación inicial ya existente y no agrega nuevas funcionalidades.
 - Arquitectura real implementada y responsabilidades de módulos.
 - Reglas de desarrollo, idioma y trazabilidad.
 - Decisiones aceptadas `DEC-001` a `DEC-006`.
+
+## AddPortfolio-0002 — Base Del Mundo RPG
+
+**Fecha:** 2026-08-11
+**Autor:** Marco Antonio Cárdenas Sánchez
+**Tipo:** Arquitectura técnica del mundo RPG 2D
+
+Se reorganiza la implementación existente para establecer una base técnica
+escalable sin crear todavía la oficina definitiva ni sistemas de interacción.
+
+### Implementación Registrada
+
+- World provisional de `1824 x 984` frente a un viewport lógico de `960 x 540`.
+- `Camera` principal siguiendo al Player dentro de los límites del World.
+- Parámetros de `zoom` y `lerp` centralizados en `configureCamera`.
+- Input centralizado para `WASD` y Arrow Keys.
+- Movimiento del Player separado en `playerMovement` y expresado en píxeles por
+  segundo.
+- Límites externos de `Arcade Physics` centralizados en Collision.
+- Cinco obstáculos estáticos provisionales para demostrar colisiones.
+- Debug de cuerpos dinámicos y estáticos solo en modo de desarrollo.
+- Integración React-Phaser y ciclo de vida de `PhaserGame` conservados.
+
+### Fuera Del Alcance
+
+- No se agregaron dependencias, assets externos, backend ni audio.
+- No se implementaron `InteractionSystem`, objetos interactivos, inventario,
+  diálogos, NPCs ni ventanas finales del portafolio.
